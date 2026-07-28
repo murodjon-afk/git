@@ -14,7 +14,7 @@ export default function GitHubWorkflowSection() {
   const [activeTab, setActiveTab] = useState('Code');
 
   return (
-    <section className="relative w-full bg-[#050714] text-white font-sans py-24 overflow-hidden flex flex-col items-center antialiased">
+    <section className="relative w-full bg-[#05081a] text-white font-sans py-24 overflow-hidden flex flex-col items-center antialiased">
       
       {/* 1. ПЕРЕКЛЮЧАТЕЛЬ ТАБОВ (CAPSULE TABS) */}
       <div className="z-10 p-1.5 rounded-full bg-[#161b22]/40 border border-[#30363d]/40 backdrop-blur-md flex items-center gap-1">

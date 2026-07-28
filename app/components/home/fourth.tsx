@@ -54,7 +54,7 @@ export default function GitHubScalesSection() {
   const [activeFilter, setActiveFilter] = useState("By industry");
 
   return (
-    <section className="w-full bg-black text-white font-sans py-24 flex flex-col items-center overflow-hidden antialiased">
+    <section className="w-full bg-[#05081a] text-white font-sans py-24 flex flex-col items-center overflow-hidden antialiased">
       
       {/* 1. ЭМОДЗИ И ЗАГОЛОВОК */}
       <div className="flex flex-col items-center text-center px-4 max-w-3xl mb-10">

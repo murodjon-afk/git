@@ -4,13 +4,13 @@ import { Files, MessageSquare, Terminal, Settings, Sparkles, Send, Play } from '
 export default function GitHubLanding() {
   return (
     // Изменили базовый фон на темно-синий из верхней точки градиента, чтобы не было швов
-    <div className="relative min-h-screen w-screen max-w-full bg-[#131832] text-white font-sans overflow-x-hidden flex flex-col antialiased">
+    <div className="relative min-h-screen w-screen max-w-full bg-[#05081a] text-white font-sans overflow-x-hidden flex flex-col antialiased">
       
       {/* ========================================== */}
       {/* 2. СЕКЦИЯ С ТЕРМИНАЛОМ/ИНТЕРФЕЙСОМ COPILOT */}
       {/* ========================================== */}
       {/* Отрегулирован градиент: добавлено кастомное свойство для точности отображения */}
-      <section className="relative w-full min-h-screen flex items-center justify-center p-4 md:p-12 lg:p-20 mt-[-40px] z-10 bg-[radial-gradient(at_100%_20%,_rgba(44,38,87,0.8)_0px,_transparent_50%),_linear-gradient(to_bottom,_#131832_0%,_#1c2e4a_60%,_#224864_100%)]">
+      <section className="relative w-full min-h-screen flex items-center justify-center p-4 md:p-12 lg:p-20 mt-[-40px] z-10 bg-[#05081a]">
         
         {/* Идеальное размытое неоновое свечение (Glow) строго за редактором */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] md:w-[900px] h-[500px] md:h-[600px] rounded-full opacity-40 pointer-events-none blur-[110px] md:blur-[150px] z-0 bg-gradient-to-r from-[#7928ca] via-[#b624ff] to-[#0070f3]" />

@@ -12,7 +12,7 @@ export default function GitHubFooterHeroLarge() {
 
   return (
     // Увеличили вертикальные паддинги с py-28 до py-36 (больше пространства сверху и снизу)
-    <section className="w-full bg-black text-white font-sans py-36 flex flex-col items-center overflow-hidden antialiased">
+    <section className="w-full bg-[#05081a] text-white font-sans py-36 flex flex-col items-center overflow-hidden antialiased">
       {/* Увеличили максимальную ширину контента с max-w-4xl до max-w-5xl */}
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center text-center px-8 relative">
         
