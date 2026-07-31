@@ -190,9 +190,9 @@ export default function DashboardPage() {
         <aside className="w-full xl:w-[320px] flex-shrink-0">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-base font-semibold text-gray-900">Top repositories</h2>
-            <button className="bg-[#1f883d] hover:bg-[#1a7732] text-white text-sm font-semibold px-3 py-1.5 rounded-md flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer">
+            <Link href={'/newrepo'} className="bg-[#1f883d] hover:bg-[#1a7732] text-white text-sm font-semibold px-3 py-1.5 rounded-md flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer">
               <FiBookmark className="w-3.5 h-3.5" /> New
-            </button>
+            </Link>
           </div>
           
           <div className="relative mb-5">

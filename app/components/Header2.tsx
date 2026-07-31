@@ -8,6 +8,7 @@ import { HiMiniPaintBrush } from "react-icons/hi2";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbLogout } from "react-icons/tb";
 import Search from "./Search";
+import NewIssue from "./NewIssue"
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import {  GoRepo, GoRepoForked, GoCode, GoOrganization, GoProject } from "react-icons/go"
@@ -31,12 +32,17 @@ import {
   GoHome,
   GoColumns,
 } from "react-icons/go";
+import { 
+  IoStarOutline, 
+  IoCodeSlashOutline, 
 
+} from 'react-icons/io5';
 import {
   Drawer,
   DrawerContent,
   DrawerHeader,
 } from "@/components/ui/drawer";
+import { Button } from "@base-ui/react";
 
 const GitHubLogo = () => (
   <svg 
@@ -51,6 +57,7 @@ const GitHubLogo = () => (
 );
 
 const Header = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -185,26 +192,20 @@ const Header = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56 bg-white border border-[#d0d7de] shadow-lg py-1 text-sm text-[#24292f]">
         <DropdownMenuItem className="cursor-pointer px-3 py-2 flex items-center gap-2 focus:bg-[#F6F8FA] focus:text-white">
-          <Link href="/issues" className="flex items-center gap-2 w-full">
+          <Button type="button"
+          onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 w-full">
             <GoIssueOpened size={16} />
             <span>New issue</span>
-          </Link>
+          </Button>
         </DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer px-3 py-2 flex items-center gap-2 focus:bg-[#F6F8FA] focus:text-white">
-          <Link href="/repositories" className="flex items-center gap-2 w-full">
+          <Link href="/newrepo" className="flex items-center gap-2 w-full">
             <GoRepo size={16} />
             <span>New repository</span>
           </Link>
         </DropdownMenuItem>
        
         
-
-        <DropdownMenuItem className="cursor-pointer px-3 py-2 flex items-center gap-2 focus:bg-[#F6F8FA] focus:text-white">
-          <Link href="/" className="flex items-center gap-2 w-full">
-            <span className="font-mono text-xs">&lt;&gt;</span>
-            <span>New gist</span>
-          </Link>
-        </DropdownMenuItem>
 
 
       
@@ -265,25 +266,26 @@ const Header = () => {
       </DropdownMenuItem>
 
       <DropdownMenuItem >
-        <Link href="/repositories" className="flex items-center gap-2 w-full">
+        <Link   href={`/${username}?repos=repositories`} className="flex items-center gap-2 w-full">
           <GoBook size={16} />
           <span>Repositories</span>
         </Link>
       </DropdownMenuItem>
-
-      <DropdownMenuItem >
-        <Link href="/appearance" className="flex items-center gap-2 w-full">
-          <HiMiniPaintBrush size={16} />
-          <span>Appearance</span>
+    <DropdownMenuItem>
+        <Link       href={`/${username}?repos=stars`} className="flex items-center gap-2 w-full">
+          <IoStarOutline size={16} />
+          <span>Stars</span>
         </Link>
       </DropdownMenuItem>
+     
+
     </DropdownMenuGroup>
 
     <DropdownMenuSeparator />
 
     <DropdownMenuGroup>
       <DropdownMenuItem >
-        <Link href="/settings" className="flex items-center gap-2 w-full">
+        <Link href="/Settings" className="flex items-center gap-2 w-full">
           <IoSettingsOutline size={16} />
           <span>Settings</span>
         </Link>
@@ -311,6 +313,10 @@ const Header = () => {
           )}
         </div>
       </div>
+      <NewIssue
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </header>
   );
 };

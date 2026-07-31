@@ -2,11 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { FiUsers, FiLink, FiSmile } from "react-icons/fi";
 import ProfileNav from "../components/profile/PreTab";
 import OverviewTab from "../components/profile/OverView";
 import RepoTab from "../components/profile/RepoTab";
 import Stars from "../components/profile/Stars";
+import Edit from "../components/Edit";
 
 interface GithubUser {
   login: string;
@@ -36,11 +38,30 @@ interface Repository {
 }
 
 export default function Page() {
+  const [isEditOpen, setIsEditOpen] = useState(false);
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [user, setUser] = useState<GithubUser | null>(null);
   const [repos, setRepos] = useState<Repository[]>([]);
   const [starredRepos, setStarredRepos] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState("overview");
+  const tabParam = searchParams.get("tab") || searchParams.get("repos") || "overview";
+  const [activeTab, setActiveTab] = useState(tabParam === "repositories" ? "repositories" : tabParam);
+  const handleTabChange = (newTab: string) => {
+    setActiveTab(newTab);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("tab", newTab);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  useEffect(() => {
+    const currentTab = searchParams.get("tab") || searchParams.get("repos");
+    if (currentTab) {
+      setActiveTab(currentTab === "repositories" ? "repositories" : currentTab);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const username = localStorage.getItem("github_user") || "murodjon-afk";
@@ -102,7 +123,7 @@ export default function Page() {
     <div className="min-h-screen bg-[#ffffff] text-[#24292f] font-sans antialiased selection:bg-[#0969da] selection:text-white">
       <ProfileNav 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
+        setActiveTab={handleTabChange} 
         publicReposCount={user.public_repos} 
       />
       <div className="w-[85%] mx-auto px-6 py-8 flex flex-col md:flex-row gap-10">
@@ -130,7 +151,8 @@ export default function Page() {
             {user.login}
           </p>
 
-          <button className="w-full py-1.5 px-4 bg-[#f6f8fa] hover:bg-[#f3f4f6] border border-[#d0d7de] text-[#24292f] font-medium text-sm rounded-md shadow-sm transition-colors mb-4 text-center">
+          <button type="button"
+          onClick={() => setIsEditOpen(true)} className="w-full py-1.5 px-4 bg-[#f6f8fa] hover:bg-[#f3f4f6] border border-[#d0d7de] text-[#24292f] font-medium text-sm rounded-md shadow-sm transition-colors mb-4 text-center">
             Edit profile
           </button>
 
@@ -179,6 +201,13 @@ export default function Page() {
         </div>
 
       </div>
+
+     <Edit
+        isOpen={isEditOpen}
+        onClose={() => setIsEditOpen(false)}
+        initialName="murodjon-afk"
+        initialBio="Web developer & programmer"
+      />
     </div>
   );
 }
