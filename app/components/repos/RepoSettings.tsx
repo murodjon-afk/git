@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { FiGitBranch, FiEdit2 } from 'react-icons/fi';
-import SeetingTab from '../repos/SettingTab'; // Укажите правильный путь к вашему файлу SeetingTab
+import SeetingTab from '../repos/SettingTab'; 
 import General from "./RepoSettingCtg/GeneralSetting";
 import Branch from "./RepoSettingCtg/BranchSetting";
-import Actions from "./RepoSettingCtg/ActionsSetting"
+import Actions from "./RepoSettingCtg/ActionsSetting";
 import SV from "./RepoSettingCtg/SV";
 import Page from "./RepoSettingCtg/Pagessetting";
+
 export default function RepoSettings() {
   const [activeTab, setActiveTab] = useState<string>('general');
   const [username, setUsername] = useState<string>('');
@@ -83,42 +83,31 @@ export default function RepoSettings() {
   }
 
   return (
-    <div className="min-h-screen bg-[#ffffff] text-[#24292f] font-sans flex justify-center p-6">
-      <div className="w-[100%] flex gap-8 pr-10">
+    <div className="min-h-screen bg-[#ffffff] text-[#24292f] font-sans flex justify-center p-3 sm:p-6">
+      <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-4 lg:gap-8 lg:pr-10">
         
-        {/* Подключаем изолированный сайдбар и передаем пропсы */}
+        {/* Адаптивный сайдбар (переключается в бургер на мобилках) */}
         <SeetingTab currentTab={activeTab} onSelectTab={setActiveTab} />
 
-        {/* Основной контент меняется в зависимости от активного таба */}
-        <main className="flex-1 bg-white">
-   {activeTab === 'general' && (
- <><General 
-  message={message}
-  newRepoName={newRepoName}
-  setNewRepoName={setNewRepoName}
-  handleRename={handleRename}
-  saving={saving}
-  isTemplate={isTemplate}
-  setIsTemplate={setIsTemplate}
-  defaultBranch={defaultBranch}
-/></>
-)}
-
-          {activeTab === 'branches' && (
-           <><Branch></Branch></>
+        {/* Основной контент */}
+        <main className="flex-1 bg-white min-w-0 overflow-x-auto">
+          {activeTab === 'general' && (
+            <General 
+              message={message}
+              newRepoName={newRepoName}
+              setNewRepoName={setNewRepoName}
+              handleRename={handleRename}
+              saving={saving}
+              isTemplate={isTemplate}
+              setIsTemplate={setIsTemplate}
+              defaultBranch={defaultBranch}
+            />
           )}
 
-          {activeTab === 'actions' && (
-           <><Actions></Actions></>
-          )}
-
-          {activeTab === 'secrets' && (
-          <><SV></SV></>
-          )}
-
-          {activeTab === 'pages' && (
-           <><Page></Page></>
-          )}
+          {activeTab === 'branches' && <Branch />}
+          {activeTab === 'actions' && <Actions />}
+          {activeTab === 'secrets' && <SV />}
+          {activeTab === 'pages' && <Page />}
         </main>
 
       </div>

@@ -1,5 +1,6 @@
 'use client'
-import  { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { GoSearch } from "react-icons/go";
 
 interface GitHubNotification {
   id: string;
@@ -67,12 +68,16 @@ const Inbox = () => {
   });
 
   return (
-    <div className="w-[85%] mx-auto p-6 font-sans text-gray-900 bg-white">
-      <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 mb-6">
+    <div className="w-full sm:w-[92%] lg:w-[85%] h-full sm:h-[85%] mx-auto p-3 sm:p-6 font-sans antialiased text-gray-900 bg-white flex flex-col justify-start">
+      
+      {/* Top Filter & Search Section */}
+      <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-3 mb-4 sm:mb-6 flex-shrink-0">
+        
+        {/* Tabs: All / Unread */}
         <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-md w-fit border border-gray-200">
           <button
             onClick={() => setActiveTab('all')}
-            className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+            className={`px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'all' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -80,7 +85,7 @@ const Inbox = () => {
           </button>
           <button
             onClick={() => setActiveTab('unread')}
-            className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+            className={`px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
               activeTab === 'unread' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'
             }`}
           >
@@ -88,33 +93,33 @@ const Inbox = () => {
           </button>
         </div>
 
+        {/* Search Input */}
         <div className="flex-1 max-w-xl relative">
           <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
+            <GoSearch size={15} />
           </span>
           <input
             type="text"
             placeholder="Search notifications"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-4 py-1.5 bg-gray-50 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white"
+            className="w-full pl-9 pr-4 py-1.5 bg-gray-50 border border-gray-300 rounded-md text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:bg-white"
           />
         </div>
 
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 rounded-md text-sm text-gray-700 cursor-pointer hover:bg-gray-50">
+        {/* Sort & Group Dropdowns (Hidden on very small screens or wrapped) */}
+        <div className="hidden sm:flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 rounded-md text-xs sm:text-sm text-gray-700 cursor-pointer hover:bg-gray-50">
             <span className="text-gray-500">Sort by:</span>
-            <span className="font-medium">Newest to oldest</span>
-            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <span className="font-medium">Newest</span>
+            <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
-          <div className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 rounded-md text-sm text-gray-700 cursor-pointer hover:bg-gray-50">
+          <div className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 rounded-md text-xs sm:text-sm text-gray-700 cursor-pointer hover:bg-gray-50">
             <span className="text-gray-500">Group by:</span>
             <span className="font-medium">Date</span>
-            <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3.5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
@@ -123,9 +128,9 @@ const Inbox = () => {
 
       {/* Баннер «Clear out the clutter» */}
       {showBanner && (
-        <div className="bg-blue-50/50 border border-blue-200/80 rounded-lg p-4 mb-6 flex items-start justify-between gap-4">
+        <div className="bg-blue-50/50 border border-blue-200/80 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 flex-shrink-0">
           <div className="flex items-start gap-3">
-            <div className="text-blue-600 mt-0.5">
+            <div className="text-blue-600 mt-0.5 hidden sm:block">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
@@ -136,13 +141,13 @@ const Inbox = () => {
               </svg>
             </div>
             <div>
-              <h2 className="text-sm font-semibold text-gray-900">Clear out the clutter.</h2>
-              <p className="text-xs text-gray-600 mt-0.5">
-                Get the most out of your new inbox by quickly and easily marking all of your previously read notifications as done.
+              <h2 className="text-xs sm:text-sm font-semibold text-gray-900">Clear out the clutter.</h2>
+              <p className="text-[11px] sm:text-xs text-gray-600 mt-0.5">
+                Get the most out of your new inbox by quickly marking read notifications as done.
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 self-end sm:self-auto">
             <button
               onClick={() => setShowBanner(false)}
               className="bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 px-3 py-1 rounded-md text-xs font-medium transition-colors shadow-sm"
@@ -157,63 +162,60 @@ const Inbox = () => {
       )}
 
       {/* Список уведомлений */}
-      <div className="border border-gray-300 rounded-lg bg-white shadow-sm overflow-hidden">
-        <div className="flex items-center px-4 py-2.5 border-b border-gray-200 bg-gray-50/70 text-xs font-medium text-gray-700">
+      <div className="border border-gray-300 rounded-lg bg-white shadow-sm flex flex-col overflow-hidden flex-1">
+        <div className="flex items-center px-4 py-2.5 border-b border-gray-200 bg-gray-50/70 text-xs font-medium text-gray-700 flex-shrink-0">
           <div className="flex items-center gap-2">
             <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
             <span className="cursor-pointer select-none">Select all</span>
           </div>
         </div>
 
-        {loading ? (
-          <div className="p-8 text-center text-sm text-gray-500">Загрузка уведомлений...</div>
-        ) : error ? (
-          <div className="p-8 text-center text-sm text-red-500">{error}</div>
-        ) : filteredNotifications.length === 0 ? (
-          <div className="p-8 text-center text-sm text-gray-500">Нет уведомлений</div>
-        ) : (
-          <div>
-            {filteredNotifications.map((item, index) => (
-              <div
-                key={item.id}
-                className={`flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors text-sm ${
-                  index !== filteredNotifications.length - 1 ? 'border-b border-gray-200' : ''
-                }`}
-              >
-                <div className="flex items-center gap-3 min-w-0">
-                  <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer" />
-                  <div className="text-purple-600 flex-shrink-0">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                      />
-                    </svg>
-                  </div>
-                  <div className="min-w-0 truncate">
-                    <span className="text-gray-600 text-xs sm:text-sm">{item.repository.full_name}</span>
-                    <span className="text-gray-400 mx-1">•</span>
-                    <a href="#" className="font-medium text-gray-900 hover:text-blue-600 truncate">
-                      {item.subject.title}
-                    </a>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4 flex-shrink-0 pl-4">
-                  <span className="text-xs text-gray-600 capitalize hidden sm:inline">{item.reason.replace('_', ' ')}</span>
-                  <div className="flex items-center -space-x-1.5">
-                    <div className="w-5 h-5 rounded-full bg-gray-800 text-white text-[10px] flex items-center justify-center border border-white">
-                      U
+        <div className="overflow-y-auto flex-1">
+          {loading ? (
+            <div className="p-8 text-center text-sm text-gray-500">Загрузка уведомлений...</div>
+          ) : error ? (
+            <div className="p-8 text-center text-sm text-red-500">{error}</div>
+          ) : filteredNotifications.length === 0 ? (
+            <div className="p-8 text-center text-sm text-gray-500">Нет уведомлений</div>
+          ) : (
+            <div>
+              {filteredNotifications.map((item, index) => (
+                <div
+                  key={item.id}
+                  className={`flex items-center justify-between px-4 py-3 hover:bg-gray-50 transition-colors text-sm ${
+                    index !== filteredNotifications.length - 1 ? 'border-b border-gray-200' : ''
+                  }`}
+                >
+                  <div className="flex items-center gap-3 min-w-0">
+                    <input type="checkbox" className="rounded border-gray-300 text-blue-600 focus:ring-blue-500 cursor-pointer flex-shrink-0" />
+                    <div className="text-purple-600 flex-shrink-0 hidden sm:block">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+                        />
+                      </svg>
+                    </div>
+                    <div className="min-w-0 truncate">
+                      <span className="text-gray-600 text-xs sm:text-sm truncate max-w-[120px] sm:max-w-none inline-block">{item.repository.full_name}</span>
+                      <span className="text-gray-400 mx-1">•</span>
+                      <a href="#" className="font-medium text-gray-900 hover:text-blue-600 truncate text-xs sm:text-sm">
+                        {item.subject.title}
+                      </a>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-500 whitespace-nowrap">{formatDate(item.updated_at)}</span>
+
+                  <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0 pl-3">
+                    <span className="text-[11px] sm:text-xs text-gray-600 capitalize hidden md:inline">{item.reason.replace('_', ' ')}</span>
+                    <span className="text-[11px] sm:text-xs text-gray-500 whitespace-nowrap">{formatDate(item.updated_at)}</span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

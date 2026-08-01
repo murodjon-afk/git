@@ -63,9 +63,9 @@ export default function AccountSettingTab({ currentTab, onSelectTab }: AccountSe
   ];
 
   return (
-    <aside className="w-72 shrink-0 space-y-4">
+    <aside className="w-full lg:w-72 shrink-0 space-y-4">
       {/* Профиль пользователя в шапке сайдбара с динамической аватаркой */}
-      <div className="flex items-center gap-3 px-3 pb-4 border-b border-[#d0d7de]">
+      <div className="flex items-center gap-3 px-2 sm:px-3 pb-4 border-b border-[#d0d7de]">
         {avatarUrl ? (
           <img 
             src={avatarUrl} 
@@ -91,19 +91,19 @@ export default function AccountSettingTab({ currentTab, onSelectTab }: AccountSe
             <button
               key={item.id}
               onClick={() => onSelectTab(item.id)}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md font-medium text-sm transition-colors text-left relative cursor-pointer ${
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-md font-medium text-xs sm:text-sm transition-colors text-left relative cursor-pointer ${
                 isActive 
                   ? 'bg-[#eaeef2] font-semibold text-[#24292f]' 
                   : 'text-[#57606a] hover:bg-[#eaeef2] hover:text-[#24292f]'
               }`}
             >
               {isActive && (
-                <div className="absolute left-0 top-1 bottom-1 w-1 bg-[#0969da] rounded-r" />
+                <div className="absolute left-0 top-1 bottom-1 w-1 bg-[#0969da] rounded-r hidden lg:block" />
               )}
               <span className={isActive ? 'text-[#24292f]' : 'text-[#57606a]'}>
                 {item.icon}
               </span>
-              {item.label}
+              <span className="truncate">{item.label}</span>
             </button>
           );
         })}

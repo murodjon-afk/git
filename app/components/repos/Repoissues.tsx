@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import IssueSideBar from "../issues/IssueSideBar";
 import Issues from "../issues/issues";
-import Asigned from "../issues/Asigned"
-import CreatedBy from "../issues/CreatedBy"
+import Asigned from "../issues/Asigned";
+import CreatedBy from "../issues/CreatedBy";
 import Mentioned from "../issues/Mentioned";
 import RecentAct from "../issues/RecentAct";
+
 const Repoissues = () => {
   const [repoTab, setRepoTab] = useState<string | null>(null);
 
@@ -21,23 +22,24 @@ const Repoissues = () => {
   };
 
   if (repoTab === null) return null;
-   
+
   return (
-    
-    <div className="w-full h-screen flex bg-[#ffffff]">
+    <div className="w-full h-screen flex flex-col lg:flex-row bg-[#ffffff] overflow-hidden">
+      {/* Сайдбар (на мобилках сверху идет в поток, на десктопе слева) */}
       <IssueSideBar activeTab={repoTab} setActiveTab={handleTabChange} />
-      <main className="flex-1 p-6">
-        {repoTab === "Issues" && <Issues/>}
-        {repoTab === "Assigned to me" &&       <Asigned></Asigned>}
-        {repoTab === "Created by me" &&         <CreatedBy></CreatedBy>}
-        {repoTab === "Mentioned" &&         <Mentioned></Mentioned>}
-        {repoTab === "Recent activity" &&         <RecentAct></RecentAct>}
-        
-        {/* Дополнительные вкладки из нижнего блока */}
-        {repoTab === "Views" && <h1>Views</h1>}
-        {repoTab === "Projects" && <h1>Projects</h1>}
-        {repoTab === "Milestones" && <h1>Milestones</h1>}
-        {repoTab === "Labels" && <h1>Labels</h1>}
+
+      {/* Основной контент с полным доступом к пространству экрана без наложений */}
+      <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
+        {repoTab === "Issues" && <Issues />}
+        {repoTab === "Assigned to me" && <Asigned />}
+        {repoTab === "Created by me" && <CreatedBy />}
+        {repoTab === "Mentioned" && <Mentioned />}
+        {repoTab === "Recent activity" && <RecentAct />}
+
+        {repoTab === "Views" && <h1 className="text-xl font-semibold">Views</h1>}
+        {repoTab === "Projects" && <h1 className="text-xl font-semibold">Projects</h1>}
+        {repoTab === "Milestones" && <h1 className="text-xl font-semibold">Milestones</h1>}
+        {repoTab === "Labels" && <h1 className="text-xl font-semibold">Labels</h1>}
       </main>
     </div>
   );

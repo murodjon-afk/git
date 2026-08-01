@@ -1,28 +1,21 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import AccountSettingTab from '../components/profile/PreSetting'; // Укажите правильный путь к сайдбару настроек аккаунта
-// Импортируйте компоненты для соответствующих разделов аккаунта:
-// import PublicProfile from "./AccountSettingCtg/PublicProfile";
-// import Emails from "./AccountSettingCtg/Emails";
-// import Password from "./AccountSettingCtg/Password";
-// import SSHKeys from "./AccountSettingCtg/SSHKeys";
-// import Repositories from "./AccountSettingCtg/Repositories";
-// import DeveloperSettings from "./AccountSettingCtg/DeveloperSettings";
-// import Pages from "./AccountSettingCtg/Pages";
-import AS from "../components/profile/SetCtg/AccSet"
+import React, { useState } from 'react';
+import AccountSettingTab from '../components/profile/PreSetting'; 
+import AS from "../components/profile/SetCtg/AccSet";
 import PS from "../components/profile/SetCtg/PubSettins";
-import ES from "../components/profile/SetCtg/ESet"
+import ES from "../components/profile/SetCtg/ESet";
 import PA from "../components/profile/SetCtg/PASet";
-import SHH from "../components/profile/SetCtg/SSHSet"
-import RS from "../components/profile/SetCtg/RepoSet"
-import PagesSet from "../components/profile/SetCtg/PagesSet"
-import Null from "../components/profile/SetCtg/Null"
+import SHH from "../components/profile/SetCtg/SSHSet";
+import RS from "../components/profile/SetCtg/RepoSet";
+import PagesSet from "../components/profile/SetCtg/PagesSet";
+import Null from "../components/profile/SetCtg/Null";
+import { FiMenu, FiX } from 'react-icons/fi';
+
 export default function AccountSettings() {
   const [activeTab, setActiveTab] = useState<string>('profile');
   const [loading, setLoading] = useState<boolean>(false);
-
-  // Здесь можно добавить логику загрузки данных пользователя, если требуется
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
 
   if (loading) {
     return (
@@ -32,46 +25,46 @@ export default function AccountSettings() {
     );
   }
 
+  const handleSelectTab = (tab: string) => {
+    setActiveTab(tab);
+    setIsMobileMenuOpen(false); // Закрываем меню на мобилках при выборе вкладки
+  };
+
   return (
-    <div className="min-h-screen bg-[#ffffff] text-[#24292f] font-sans flex justify-center p-6">
-      <div className="w-[100%] flex gap-8 pr-10">
+    <div className="min-h-screen bg-[#ffffff] text-[#24292f] font-sans flex justify-center p-3 sm:p-6">
+      <div className="w-full max-w-[1280px] flex flex-col lg:flex-row gap-6 lg:gap-8 pr-0 lg:pr-10">
         
-        {/* Подключаем сайдбар настроек аккаунта */}
-        <AccountSettingTab currentTab={activeTab} onSelectTab={setActiveTab} />
+        {/* Мобильная кнопка переключения меню настроек */}
+        <div className="lg:hidden flex items-center justify-between bg-white border border-[#d0d7de] p-3 rounded-md shadow-sm">
+          <span className="font-semibold text-sm capitalize">
+            Settings: <span className="text-[#0969da]">{activeTab}</span>
+          </span>
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className="p-2 text-[#57606a] hover:bg-gray-100 rounded-md transition-colors"
+            aria-label="Toggle settings menu"
+          >
+            {isMobileMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+          </button>
+        </div>
 
-        {/* Основной контент меняется в зависимости от активного таба */}
-        <main className="flex-1 bg-white">
-          {activeTab === 'profile' && (
-           <><PS></PS></>
-          )}
+        {/* Сайдбар (скрывается на мобилках, если не открыт, и показывается в виде модалки/аккордеона) */}
+        <div className={`${isMobileMenuOpen ? 'block' : 'hidden'} lg:block w-full lg:w-72 shrink-0`}>
+          <div className="bg-white lg:bg-transparent border lg:border-none border-[#d0d7de] rounded-md lg:rounded-none p-3 lg:p-0 shadow-sm lg:shadow-none">
+            <AccountSettingTab currentTab={activeTab} onSelectTab={handleSelectTab} />
+          </div>
+        </div>
 
-          {activeTab === 'account' && (
-           <><AS></AS></>
-          )}
-
-           {activeTab === 'emails' && (
-           <><ES></ES></>
-          )}
-
-          {activeTab === 'password' && (
-          <><PA></PA></>
-          )}
-
-          {activeTab === 'ssh' && (
-            <><SHH></SHH></>
-          )}
-
-          {activeTab === 'repositories' && (
-           <><RS></RS></>
-          )}
-
-          {activeTab === 'developer' && (
-          <><Null></Null></>
-          )}
-
-          {activeTab === 'pages' && (
-           <><PagesSet></PagesSet></>
-          )}
+        {/* Основной контент */}
+        <main className="flex-1 bg-white min-w-0">
+          {activeTab === 'profile' && <PS />}
+          {activeTab === 'account' && <AS />}
+          {activeTab === 'emails' && <ES />}
+          {activeTab === 'password' && <PA />}
+          {activeTab === 'ssh' && <SHH />}
+          {activeTab === 'repositories' && <RS />}
+          {activeTab === 'developer' && <Null />}
+          {activeTab === 'pages' && <PagesSet />}
         </main>
 
       </div>

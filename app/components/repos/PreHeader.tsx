@@ -4,30 +4,32 @@ import {
   Code2, 
   CircleDot, 
   GitPullRequest, 
-  LayoutGrid, 
   ShieldAlert, 
   Settings 
 } from "lucide-react";
-const PreHeader = () => {
-      const [activeTab, setActiveTab] = useState('Code');
-    useEffect(() => {
-  const tab = localStorage.getItem("activeTab");
 
-  if (tab) {
-    setActiveTab(tab);
-  }
-}, []);
-      const tabs = [
-        { name: 'Code', icon: Code2 },
-        { name: 'Issues', icon: CircleDot },
-        { name: 'Pull requests', icon: GitPullRequest },
-        { name: 'Security and quality', icon: ShieldAlert },
-        { name: 'Settings', icon: Settings },
-      ];
+const PreHeader = () => {
+  const [activeTab, setActiveTab] = useState('Code');
+
+  useEffect(() => {
+    const tab = localStorage.getItem("activeTab");
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, []);
+
+  const tabs = [
+    { name: 'Code', icon: Code2 },
+    { name: 'Issues', icon: CircleDot },
+    { name: 'Pull requests', icon: GitPullRequest },
+    { name: 'Security and quality', icon: ShieldAlert },
+    { name: 'Settings', icon: Settings },
+  ];
+
   return (
-<>
- <div className="w-full h-12 bg-[#f6f8fa] border-b border-[#d8dee4] flex items-end px-4 overflow-x-auto scrollbar-none">
-        <nav className="flex gap-1 h-9 items-center">
+    <>
+      <div className="w-full h-11 bg-[#f6f8fa] border-b border-[#d8dee4] flex items-end px-3 sm:px-4 overflow-x-auto scrollbar-none">
+        <nav className="flex gap-0.5 sm:gap-1 h-9 items-center">
           {tabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.name;
@@ -35,18 +37,21 @@ const PreHeader = () => {
             return (
               <button
                 key={tab.name}
-onClick={() => {
-  setActiveTab(tab.name);
-  localStorage.setItem('activeTab', tab.name);
-  window.dispatchEvent(new Event("activeTabChanged"));
-}}                className={`relative flex items-center gap-2 px-3 h-full text-[13px] font-sans transition-colors cursor-pointer rounded-md hover:bg-[#aeb7c0]/15 ${
+                title={tab.name}
+                onClick={() => {
+                  setActiveTab(tab.name);
+                  localStorage.setItem('activeTab', tab.name);
+                  window.dispatchEvent(new Event("activeTabChanged"));
+                }}                
+                className={`relative flex items-center justify-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 h-full text-[12px] sm:text-[13px] font-sans transition-colors cursor-pointer rounded-md hover:bg-[#aeb7c0]/15 ${
                   isActive 
                     ? 'text-[#24292f] font-semibold' 
                     : 'text-[#57606a] hover:text-[#24292f]'
                 }`}
               >
-                <Icon size={16} className={isActive ? 'text-[#24292f]' : 'text-[#57606a]'} />
-                <span className="whitespace-nowrap">{tab.name}</span>
+                <Icon size={16} className={`shrink-0 ${isActive ? 'text-[#24292f]' : 'text-[#57606a]'}`} />
+                {/* Текст скрыт на мобильных устройствах (показывается только от sm и выше) */}
+                <span className="hidden sm:inline whitespace-nowrap">{tab.name}</span>
 
                 {/* Оранжевая линия под активной вкладкой */}
                 {isActive && (
@@ -57,8 +62,8 @@ onClick={() => {
           })}
         </nav>
       </div>
-</>
-  )
-}
+    </>
+  );
+};
 
-export default PreHeader
+export default PreHeader;

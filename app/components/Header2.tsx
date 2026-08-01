@@ -4,14 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
-import { HiMiniPaintBrush } from "react-icons/hi2";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbLogout } from "react-icons/tb";
 import Search from "./Search";
-import NewIssue from "./NewIssue"
+import NewIssue from "./NewIssue";
 import axios from "axios";
 import { usePathname } from "next/navigation";
-import {  GoRepo, GoRepoForked, GoCode, GoOrganization, GoProject } from "react-icons/go"
+import { GoRepo } from "react-icons/go";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,12 +29,9 @@ import {
   GoBook, 
   GoInbox,
   GoHome,
-  GoColumns,
 } from "react-icons/go";
 import { 
   IoStarOutline, 
-  IoCodeSlashOutline, 
-
 } from 'react-icons/io5';
 import {
   Drawer,
@@ -67,35 +63,32 @@ const Header = () => {
   const title = pathname.includes("/repository/")
     ? "Repository"
     : "Dashboard";
+
   useEffect(() => {
     const savedUser = localStorage.getItem("github_user");
     if (savedUser) {
       setUsername(savedUser);
-      
       axios
         .get(`https://api.github.com/users/${encodeURIComponent(savedUser)}`)
         .then((res) => setAvatarUrl(res.data.avatar_url))
         .catch((err) => console.error(err))
         .finally(() => setIsLoaded(true));
-        
     } else {
       setIsLoaded(true);
     }
   }, []);
-
-
-  
 
   return (
     <header className="relative z-50 w-full px-4 md:px-6 h-14 flex items-center justify-between text-[14px] bg-[#f6f8fa] text-[#1f2328] border-b border-[#d0d7de]">
       
       {/* Левая часть */}
       <div className="flex items-center gap-3">
+        {/* Бургер меню — показывается на мобилках и планшетах до 768px (md) */}
         {isLoaded && username && (
           <Drawer open={isOpen} onOpenChange={setIsOpen} swipeDirection="left">
             <button 
               onClick={() => setIsOpen(true)}
-              className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center transition-colors cursor-pointer"
+              className="md:hidden p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center transition-colors cursor-pointer"
             >
               <GoRows size={18} />
             </button>
@@ -126,12 +119,13 @@ const Header = () => {
                   </div>
                 </DrawerHeader>
 
+                {/* Навигация внутри мобильного бургер-меню (< 768px) */}
                 <div className="py-3 flex flex-col gap-4 text-[#1f2328] text-sm font-normal">
-                  <div className="flex flex-col gap-0.5">
+                  <div className="flex flex-col gap-1">
                     <Link 
                       href="/" 
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-2 py-1.5 hover:bg-[#f6f8fa] rounded-md transition-colors"
+                      className="flex items-center gap-3 px-2 py-2 hover:bg-[#f6f8fa] rounded-md transition-colors"
                     >
                       <GoHome size={16} className="text-[#57606a]" /> <span>Home</span>
                     </Link>
@@ -139,7 +133,7 @@ const Header = () => {
                     <Link 
                       href="/issues" 
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-2 py-1.5 hover:bg-[#f6f8fa] rounded-md transition-colors"
+                      className="flex items-center gap-3 px-2 py-2 hover:bg-[#f6f8fa] rounded-md transition-colors"
                     >
                       <GoIssueOpened size={16} className="text-[#57606a]" /> <span>All issues</span>
                     </Link>
@@ -147,7 +141,7 @@ const Header = () => {
                     <Link 
                       href="/requests" 
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-2 py-1.5 hover:bg-[#f6f8fa] rounded-md transition-colors"
+                      className="flex items-center gap-3 px-2 py-2 hover:bg-[#f6f8fa] rounded-md transition-colors"
                     >
                       <GoGitPullRequest size={16} className="text-[#57606a]" /> <span>All pull requests</span>
                     </Link>
@@ -155,12 +149,18 @@ const Header = () => {
                     <Link 
                       href="/repositories" 
                       onClick={() => setIsOpen(false)}
-                      className="flex items-center gap-3 px-2 py-1.5 hover:bg-[#f6f8fa] rounded-md transition-colors"
+                      className="flex items-center gap-3 px-2 py-2 hover:bg-[#f6f8fa] rounded-md transition-colors"
                     >
                       <GoBook size={16} className="text-[#57606a]" /> <span>All repositories</span>
                     </Link>
 
-                   
+                    <Link 
+                      href={`/${encodeURIComponent(username ?? "/")}/inbox`} 
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center gap-3 px-2 py-2 hover:bg-[#f6f8fa] rounded-md transition-colors"
+                    >
+                      <GoInbox size={16} className="text-[#57606a]" /> <span>Inbox</span>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -180,130 +180,120 @@ const Header = () => {
 
       {/* Правая часть */}
       <div className="flex items-center gap-2">
-      
-               <Search></Search>
+        <Search />
+
         <div className="hidden md:block w-[1px] h-4 bg-[#d0d7de] mx-1" />
 
         <div className="flex items-center gap-1.5">
-<DropdownMenu>
-      <DropdownMenuTrigger className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center gap-0.5 h-7 transition-colors cursor-pointer outline-none">
-        <GoPlus size={16} />
-        <GoTriangleDown size={10} />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56 bg-white border border-[#d0d7de] shadow-lg py-1 text-sm text-[#24292f]">
-        <DropdownMenuItem className="cursor-pointer px-3 py-2 flex items-center gap-2 focus:bg-[#F6F8FA] focus:text-white">
-          <Button type="button"
-          onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 w-full">
-            <GoIssueOpened size={16} />
-            <span>New issue</span>
-          </Button>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer px-3 py-2 flex items-center gap-2 focus:bg-[#F6F8FA] focus:text-white">
-          <Link href="/newrepo" className="flex items-center gap-2 w-full">
-            <GoRepo size={16} />
-            <span>New repository</span>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center gap-0.5 h-7 transition-colors cursor-pointer outline-none">
+              <GoPlus size={16} />
+              <GoTriangleDown size={10} />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56 bg-white border border-[#d0d7de] shadow-lg py-1 text-sm text-[#24292f]">
+              <DropdownMenuItem className="cursor-pointer px-3 py-2 flex items-center gap-2 focus:bg-[#F6F8FA]">
+                <Button type="button" onClick={() => setIsModalOpen(true)} className="flex items-center gap-2 w-full bg-transparent border-none cursor-pointer text-left">
+                  <GoIssueOpened size={16} />
+                  <span>New issue</span>
+                </Button>
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer px-3 py-2 flex items-center gap-2 focus:bg-[#F6F8FA]">
+                <Link href="/newrepo" className="flex items-center gap-2 w-full">
+                  <GoRepo size={16} />
+                  <span>New repository</span>
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          {/* Иконки быстрого доступа скрываются на планшетах/мобилках (< 768px), переносясь в бургер-меню */}
+          <Link href="/issues" className="hidden md:block">
+            <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
+              <GoIssueOpened size={16} />
+            </button>
           </Link>
-        </DropdownMenuItem>
-       
-        
 
+          <Link href="/requests" className="hidden md:block">
+            <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
+              <GoGitPullRequest size={16} />
+            </button>
+          </Link>
 
-      
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <Link href="/repositories" className="hidden md:block">
+            <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
+              <GoBook size={16} />
+            </button>
+          </Link>
 
-<Link href="/issues">
-  <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
-    <GoIssueOpened size={16} />
-  </button>
-</Link>
-
-<Link href="/requests">
-  <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
-    <GoGitPullRequest size={16} />
-  </button>
-</Link>
-
-<Link href="/repositories">
-  <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
-    <GoBook size={16} />
-  </button>
-</Link>
-
-<Link href={`/${encodeURIComponent(username ?? "/")}/inbox`}>
-  <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
-    <GoInbox size={16} />
-  </button>
-</Link>
+          <Link href={`/${encodeURIComponent(username ?? "/")}/inbox`} className="hidden md:block">
+            <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
+              <GoInbox size={16} />
+            </button>
+          </Link>
 
           {isLoaded && (
             username ? (
               <DropdownMenu>
-               <DropdownMenuTrigger>
-  <div className="w-7 h-7 rounded-full overflow-hidden border border-[#d0d7de] hover:opacity-80 transition-opacity flex items-center justify-center cursor-pointer bg-white">
-    {avatarUrl ? (
-      <img 
-        src={avatarUrl} 
-        alt={`${username}'s avatar`} 
-        className="w-full h-full object-cover"
-      />
-    ) : (
-      <span className="text-[11px] font-semibold text-[#57606a] uppercase">
-        {username ? username.charAt(0) : ""}
-      </span>
-    )}
-  </div>
-</DropdownMenuTrigger>
-               <DropdownMenuContent className="w-40" align="end">
-    <DropdownMenuGroup>
-      <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuTrigger className="outline-none">
+                  <div className="w-7 h-7 rounded-full overflow-hidden border border-[#d0d7de] hover:opacity-80 transition-opacity flex items-center justify-center cursor-pointer bg-white">
+                    {avatarUrl ? (
+                      <img 
+                        src={avatarUrl} 
+                        alt={`${username}'s avatar`} 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-[11px] font-semibold text-[#57606a] uppercase">
+                        {username ? username.charAt(0) : ""}
+                      </span>
+                    )}
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-40" align="end">
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                    <DropdownMenuItem>
+                      <Link href={`/${encodeURIComponent(username ?? "/")}`} className="flex items-center gap-2 w-full">
+                        <CgProfile size={16} />
+                        <span>Profile</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href={`/${username}?repos=repositories`} className="flex items-center gap-2 w-full">
+                        <GoBook size={16} />
+                        <span>Repositories</span>
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <Link href={`/${username}?repos=stars`} className="flex items-center gap-2 w-full">
+                        <IoStarOutline size={16} />
+                        <span>Stars</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
 
-      <DropdownMenuItem >
-        <Link href={`/${encodeURIComponent(username ?? "/")}`} className="flex items-center gap-2 w-full">
-          <CgProfile size={16} />
-          <span>Profile</span>
-        </Link>
-      </DropdownMenuItem>
+                  <DropdownMenuSeparator />
 
-      <DropdownMenuItem >
-        <Link   href={`/${username}?repos=repositories`} className="flex items-center gap-2 w-full">
-          <GoBook size={16} />
-          <span>Repositories</span>
-        </Link>
-      </DropdownMenuItem>
-    <DropdownMenuItem>
-        <Link       href={`/${username}?repos=stars`} className="flex items-center gap-2 w-full">
-          <IoStarOutline size={16} />
-          <span>Stars</span>
-        </Link>
-      </DropdownMenuItem>
-     
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <Link href="/Settings" className="flex items-center gap-2 w-full">
+                        <IoSettingsOutline size={16} />
+                        <span>Settings</span>
+                      </Link>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
 
-    </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
 
-    <DropdownMenuSeparator />
-
-    <DropdownMenuGroup>
-      <DropdownMenuItem >
-        <Link href="/Settings" className="flex items-center gap-2 w-full">
-          <IoSettingsOutline size={16} />
-          <span>Settings</span>
-        </Link>
-      </DropdownMenuItem>
-    </DropdownMenuGroup>
-
-    <DropdownMenuSeparator />
-
-    <DropdownMenuItem >
-      <Link href="/" className="flex items-center gap-2 w-full" onClick={()=>{
-        localStorage.removeItem('github_user');
-          
-      }}>
-        <TbLogout size={16} />
-        <span>Log out</span>
-      </Link>
-    </DropdownMenuItem>
-  </DropdownMenuContent>
+                  <DropdownMenuItem>
+                    <Link href="/" className="flex items-center gap-2 w-full" onClick={() => {
+                      localStorage.removeItem('github_user');
+                    }}>
+                      <TbLogout size={16} />
+                      <span>Log out</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
               </DropdownMenu>
             ) : (
               <Link href="/git-registration" className="hover:bg-[#f3f4f6] text-[#1f2328] text-[13px] border border-[#d0d7de] px-3 py-1 rounded-md bg-white transition-colors h-7 flex items-center">

@@ -47,8 +47,10 @@ export default function Page() {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [starredRepos, setStarredRepos] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
+  
   const tabParam = searchParams.get("tab") || searchParams.get("repos") || "overview";
   const [activeTab, setActiveTab] = useState(tabParam === "repositories" ? "repositories" : tabParam);
+  
   const handleTabChange = (newTab: string) => {
     setActiveTab(newTab);
     const params = new URLSearchParams(searchParams.toString());
@@ -121,44 +123,53 @@ export default function Page() {
 
   return (
     <div className="min-h-screen bg-[#ffffff] text-[#24292f] font-sans antialiased selection:bg-[#0969da] selection:text-white">
+      
+      {/* Навигация профиля (адаптирована под мобильные экраны) */}
       <ProfileNav 
         activeTab={activeTab} 
         setActiveTab={handleTabChange} 
         publicReposCount={user.public_repos} 
       />
-      <div className="w-[85%] mx-auto px-6 py-8 flex flex-col md:flex-row gap-10">
+
+      {/* Основной контейнер с адаптивными отступами и версткой */}
+      <div className="w-full sm:w-[92%] lg:w-[85%] mx-auto px-3 sm:px-6 py-4 sm:py-8 flex flex-col md:flex-row gap-6 md:gap-10">
         
-        {/* Левая колонка: Профиль */}
-        <div className="w-full md:w-[296px] flex-shrink-0 flex flex-col py-5">
-          <div className="relative -mt-8 mb-4">
+        {/* Левая колонка: Профиль (на мобилках вверху, на десктопе фиксированная ширина) */}
+        <div className="w-full md:w-[296px] flex-shrink-0 flex flex-col py-2 md:py-5">
+          <div className="relative -mt-4 sm:-mt-8 mb-4 max-w-[200px] md:max-w-none mx-auto w-full">
             <Image
               src={user.avatar_url}
               alt={user.login}
               width={256}
               height={256}
-              className="rounded-full border border-[#d8dee4] bg-white shadow-sm w-[100%] h-auto mx-auto aspect-square object-cover"
+              className="rounded-full border border-[#d8dee4] bg-white shadow-sm w-full h-auto mx-auto aspect-square object-cover"
               priority
             />
-            <button className="absolute bottom-4 right-4 bg-white border border-[#d0d7de] hover:bg-[#f3f4f6] text-[#24292f] p-2 rounded-full shadow-sm flex items-center justify-center transition-colors">
-              <FiSmile className="w-5 h-5" />
+            <button className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-white border border-[#d0d7de] hover:bg-[#f3f4f6] text-[#24292f] p-2 rounded-full shadow-sm flex items-center justify-center transition-colors">
+              <FiSmile className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
 
-          <h1 className="text-2xl font-semibold leading-tight text-[#24292f]">
-            {user.name ?? user.login}
-          </h1>
-          <p className="text-xl font-light text-[#57606a] mb-4">
-            {user.login}
-          </p>
+          <div className="text-center md:text-left">
+            <h1 className="text-xl sm:text-2xl font-semibold leading-tight text-[#24292f] truncate">
+              {user.name ?? user.login}
+            </h1>
+            <p className="text-lg sm:text-xl font-light text-[#57606a] mb-4 truncate">
+              {user.login}
+            </p>
+          </div>
 
-          <button type="button"
-          onClick={() => setIsEditOpen(true)} className="w-full py-1.5 px-4 bg-[#f6f8fa] hover:bg-[#f3f4f6] border border-[#d0d7de] text-[#24292f] font-medium text-sm rounded-md shadow-sm transition-colors mb-4 text-center">
+          <button 
+            type="button"
+            onClick={() => setIsEditOpen(true)} 
+            className="w-full py-1.5 px-4 bg-[#f6f8fa] hover:bg-[#f3f4f6] border border-[#d0d7de] text-[#24292f] font-medium text-sm rounded-md shadow-sm transition-colors mb-4 text-center cursor-pointer"
+          >
             Edit profile
           </button>
 
-          <div className="flex items-center gap-1.5 text-sm text-[#57606a] mb-4">
-            <FiUsers className="w-4 h-4 text-[#57606a]" />
-            <div>
+          <div className="flex items-center justify-center md:justify-start gap-1.5 text-xs sm:text-sm text-[#57606a] mb-4 flex-wrap">
+            <FiUsers className="w-4 h-4 text-[#57606a] flex-shrink-0" />
+            <div className="truncate">
               <span className="font-semibold text-[#24292f]">{user.followers}</span> followers
               <span className="mx-1">·</span>
               <span className="font-semibold text-[#24292f]">{user.following}</span> following
@@ -166,8 +177,8 @@ export default function Page() {
           </div>
 
           {user.blog && (
-            <div className="flex items-center gap-2 text-sm text-[#24292f] mb-6">
-              <FiLink className="w-4 h-4 text-[#57606a]" />
+            <div className="flex items-center justify-center md:justify-start gap-2 text-xs sm:text-sm text-[#24292f] mb-6 overflow-hidden">
+              <FiLink className="w-4 h-4 text-[#57606a] flex-shrink-0" />
               <a href={user.blog.startsWith("http") ? user.blog : `https://${user.blog}`} target="_blank" rel="noreferrer" className="hover:underline truncate">
                 {user.blog.replace(/^https?:\/\//, "")}
               </a>
@@ -175,9 +186,9 @@ export default function Page() {
           )}
 
           <div className="border-t border-[#d8dee4] pt-4 mt-2">
-            <h2 className="font-semibold text-[#24292f] text-base mb-3">Achievements</h2>
-            <div className="flex gap-2">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-500 flex items-center justify-center shadow-inner p-1">
+            <h2 className="font-semibold text-[#24292f] text-sm sm:text-base mb-3 text-center md:text-left">Achievements</h2>
+            <div className="flex justify-center md:justify-start gap-2">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-pink-400 via-purple-500 to-indigo-500 flex items-center justify-center shadow-inner p-1">
                 <div className="w-full h-full bg-white rounded-full flex flex-col items-center justify-center text-[10px] font-bold tracking-tighter text-[#24292f]">
                   <span>YO</span>
                   <span className="text-[8px] text-pink-600">LO</span>
@@ -187,8 +198,8 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Правая колонка: Условный рендеринг в зависимости от вкладки */}
-        <div className="flex-1 flex flex-col min-w-0">
+        {/* Правая колонка: Условный рендеринг контента (включая графики, обзоры и диаграммы со стопроцентной адаптивностью) */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           {activeTab === "overview" && (
             <OverviewTab repos={repos} publicReposCount={user.public_repos} />
           )}
@@ -202,7 +213,7 @@ export default function Page() {
 
       </div>
 
-     <Edit
+      <Edit
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
         initialName="murodjon-afk"
