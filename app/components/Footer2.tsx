@@ -1,11 +1,14 @@
 'use client'
 import Link from "next/link";
-import { useState  } from "react";
+import { useState , useEffect } from "react";
 const Footer = () => {
-const [username, setUsername] = useState(() => {
-  return localStorage.getItem('github_user') || '';
-});
-
+const [username, setUsername] = useState("");
+useEffect(() => {
+  const savedUser = localStorage.getItem("github_user");
+  if (savedUser) {
+    setUsername(savedUser);
+  }
+}, []);
 
 
     const currentYear = new Date().getFullYear();

@@ -20,8 +20,8 @@ export default function RepoSettings() {
   const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('github_user') || 'murodjon-afk';
-    const storedRepo = localStorage.getItem('last_repo') || 'git-diplom';
+    const storedUser = localStorage.getItem('github_user') || '';
+    const storedRepo = localStorage.getItem('last_repo') || '';
     
     setUsername(storedUser);
     setRepoName(storedRepo);

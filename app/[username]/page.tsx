@@ -50,7 +50,6 @@ export default function Page() {
   const [starredRepos, setStarredRepos] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Profile editable fields state (synced with Edit modal & localStorage/state)
   const [profileData, setProfileData] = useState({
     name: "murodjon-afk",
     bio: "Web developer & programmer",
@@ -79,7 +78,7 @@ export default function Page() {
   }, [searchParams]);
 
   useEffect(() => {
-    const username = localStorage.getItem("github_user") || "murodjon-afk";
+    const username = localStorage.getItem("github_user") || "";
 
     const fetchData = async () => {
       try {

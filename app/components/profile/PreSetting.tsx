@@ -19,7 +19,7 @@ export default function AccountSettingTab({ currentTab, onSelectTab }: AccountSe
   const [username, setUsername] = useState<string>('murodjon-afk');
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('github_user') || 'murodjon-afk';
+    const storedUser = localStorage.getItem('github_user') || '';
     setUsername(storedUser);
 
     async function fetchUserAvatar() {

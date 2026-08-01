@@ -59,6 +59,8 @@ interface GitHubEvent {
 }
 
 export default function DashboardPage() {
+  const [username, setUsername] = useState("");
+
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
   const [activeScope] = useState("All repositories");
@@ -142,6 +144,12 @@ export default function DashboardPage() {
     }
   };
 
+useEffect(() => {
+  const savedUser = localStorage.getItem("github_user");
+  if (savedUser) {
+    setUsername(savedUser);
+  }
+}, []);
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString);
@@ -207,7 +215,7 @@ export default function DashboardPage() {
                     className="w-5 h-5 rounded-full flex-shrink-0 border border-gray-200 object-cover"
                   />
                   <Link 
-                    href={`/${encodeURIComponent(localStorage.getItem("github_user") || "")}/repository/${encodeURIComponent(repo.name)}`} 
+href={`/${encodeURIComponent(username)}/repository/${encodeURIComponent(repo.name)}`}
                     className="hover:underline font-medium truncate text-gray-900"
                     onClick={() => {
                       localStorage.setItem("last_repo", repo.name);

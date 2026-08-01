@@ -12,7 +12,7 @@ export default function AccSet() {
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("github_user") || "murodjon-afk";
+    const storedUser = localStorage.getItem("github_user") || "";
     setUsername(storedUser);
     setNewUsername(storedUser);
 
