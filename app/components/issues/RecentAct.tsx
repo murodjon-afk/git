@@ -21,7 +21,7 @@ const RecentAct = () => {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isOpenFilter, setIsOpenFilter] = useState<boolean>(true); // true = open, false = closed
+  const [isOpenFilter, setIsOpenFilter] = useState<boolean>(true); 
 
   const [openCount, setOpenCount] = useState<number>(0);
   const [closedCount, setClosedCount] = useState<number>(0);
@@ -42,12 +42,10 @@ const RecentAct = () => {
 
         const stateParam = isOpenFilter ? "open" : "closed";
         
-        // Вычисляем дату неделю назад (@today-1w) для API
         const oneWeekAgo = new Date();
         oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
         const dateString = oneWeekAgo.toISOString().split("T")[0]; // YYYY-MM-DD
 
-        // Эндпоинт Search API с фильтром по обновлению за неделю и сортировкой по убыванию
         const url = `https://api.github.com/search/issues?q=repo:${githubUser}/${lastRepo}+is:issue+state:${stateParam}+updated:>${dateString}&sort=updated&order=desc`;
 
         const response = await fetch(url, {
@@ -64,7 +62,6 @@ const RecentAct = () => {
         const pureIssues = data.items || [];
         setIssues(pureIssues);
 
-        // Обновляем счетчики на основе total_count из ответа API
         if (isOpenFilter) {
           setOpenCount(data.total_count || 0);
         } else {
@@ -110,7 +107,6 @@ const RecentAct = () => {
         </div>
       )}
 
-      {/* Заголовок Recent activity */}
       <div className="w-full flex justify-between items-center my-3">
         <h1 className="text-xl font-semibold">Recent activity</h1>
         <button className="text-sm bg-[#1f883d] hover:bg-[#1a7f37] text-white py-1.5 px-3 font-medium cursor-pointer rounded-md shadow-sm transition-colors">
@@ -118,7 +114,6 @@ const RecentAct = () => {
         </button>
       </div>
 
-      {/* Поисковая строка с баджами по референсу скриншота */}
       <div className="relative w-full mb-4 flex items-center bg-[#f6f8fa] border border-[#d0d7de] rounded-md focus-within:border-[#0969da] focus-within:ring-1 focus-within:ring-[#0969da] shadow-sm transition-all h-8">
         <div className="flex-1 flex items-center px-3 overflow-x-auto whitespace-nowrap scrollbar-none text-sm text-[#57606a]">
           <span className="text-[#0969da] bg-[#ddf4ff] px-1.5 py-0.5 rounded mr-1.5 text-[13px]">is:issue</span>
@@ -134,9 +129,7 @@ const RecentAct = () => {
         </div>
       </div>
 
-      {/* Контейнер таблицы */}
       <div className="border border-[#d0d7de] rounded-lg overflow-hidden">
-        {/* Шапка таблицы */}
         <div className="flex items-center justify-between bg-[#f6f8fa] border-b border-[#d0d7de] px-4 py-3 text-sm text-[#57606a]">
           <div className="flex items-center gap-4">
             <input
@@ -183,14 +176,12 @@ const RecentAct = () => {
           </div>
         </div>
 
-        {/* Индикатор загрузки */}
         {loading && (
           <div className="flex justify-center items-center min-h-[200px] text-gray-500 bg-white">
             Loading...
           </div>
         )}
 
-        {/* Список результатов или состояние "No results" */}
         {!loading && !error && (
           <div className="bg-white divide-y divide-[#d0d7de]">
             {issues.length === 0 ? (
@@ -227,7 +218,6 @@ const RecentAct = () => {
                       </a>
                     </div>
                     
-                    {/* Дублируем структуру описания с референса: opened... · Updated... */}
                     <p className="text-xs text-[#57606a] mt-1 font-sans">
                       #{issue.number} · {issue.user.login} opened {formatTimeAgo(issue.created_at)} · Updated {formatTimeAgo(issue.updated_at)}
                     </p>

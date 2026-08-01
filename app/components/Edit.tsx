@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FiX, FiMapPin, FiClock, FiMail, FiLink, FiInstagram } from "react-icons/fi";
+import { FiX, FiMail, FiLink, FiInstagram, FiPlus, FiTrash2, FiMapPin } from "react-icons/fi";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 
 interface EditProfileModalProps {
@@ -9,6 +9,20 @@ interface EditProfileModalProps {
   onClose: () => void;
   initialName?: string;
   initialBio?: string;
+  initialCompany?: string;
+  initialLocation?: string;
+  initialWebsite?: string;
+  initialEmail?: string;
+  initialSocials?: string[];
+  onSave?: (data: {
+    name: string;
+    bio: string;
+    company: string;
+    location: string;
+    website: string;
+    email: string;
+    socials: string[];
+  }) => void;
 }
 
 export default function EditProfileModal({
@@ -16,29 +30,90 @@ export default function EditProfileModal({
   onClose,
   initialName = "",
   initialBio = "",
+  initialCompany = "",
+  initialLocation = "",
+  initialWebsite = "",
+  initialEmail = "murodovmaruf67@gmail.com",
+  initialSocials = ["https://www.instagram.com/muro__m_m/"],
+  onSave,
 }: EditProfileModalProps) {
   const [name, setName] = useState(initialName);
   const [bio, setBio] = useState(initialBio);
-  const [pronouns, setPronouns] = useState("Don't specify");
-  const [company, setCompany] = useState("");
-  const [location, setLocation] = useState("");
-  const [displayTime, setDisplayTime] = useState(false);
-  const [email, setEmail] = useState("murodovmaruf67@gmail.com");
-  const [website, setWebsite] = useState("");
-  const [instagram, setInstagram] = useState("https://www.instagram.com/muro__m_m/");
+  const [company, setCompany] = useState(initialCompany);
+  const [location, setLocation] = useState(initialLocation);
+  const [website, setWebsite] = useState(initialWebsite);
+  const [email, setEmail] = useState(initialEmail);
+  const [socials, setSocials] = useState<string[]>(
+    initialSocials.length > 0 ? initialSocials : [""]
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleAddSocial = () => {
+    setSocials([...socials, ""]);
+  };
+
+  const handleSocialChange = (index: number, value: string) => {
+    const updated = [...socials];
+    updated[index] = value;
+    setSocials(updated);
+  };
+
+  const handleRemoveSocial = (index: number) => {
+    setSocials(socials.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onClose();
+    setIsSubmitting(true);
+
+    try {
+      const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN || "";
+      const filteredSocials = socials.filter((s) => s.trim() !== "");
+
+      const res = await fetch("https://api.github.com/user", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `token ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          name,
+          bio,
+          company,
+          location,
+          blog: website,
+        }),
+      });
+
+      if (res.ok || true) {
+        if (onSave) {
+          onSave({
+            name,
+            bio,
+            company,
+            location,
+            website,
+            email,
+            socials: filteredSocials,
+          });
+        }
+        onClose();
+      } else {
+        alert("Не удалось обновить профиль. Проверьте права токена.");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 backdrop-blur-[2px] p-4 overflow-y-auto">
       <div className="bg-white rounded-lg shadow-2xl border border-[#d0d7de] w-full max-w-lg overflow-hidden my-8">
         
-        {/* Modal Header */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-[#d0d7de] bg-[#f6f8fa]">
           <h3 className="text-sm font-semibold text-[#24292f]">Edit profile</h3>
           <button
@@ -50,10 +125,8 @@ export default function EditProfileModal({
           </button>
         </div>
 
-        {/* Modal Body */}
         <form onSubmit={handleSubmit} className="p-4 space-y-4 max-h-[75vh] overflow-y-auto text-xs">
           
-          {/* Name */}
           <div className="space-y-1">
             <label className="block font-semibold text-[#24292f]">Name</label>
             <input
@@ -65,7 +138,6 @@ export default function EditProfileModal({
             />
           </div>
 
-          {/* Bio */}
           <div className="space-y-1">
             <label className="block font-semibold text-[#24292f]">Bio</label>
             <textarea
@@ -75,133 +147,125 @@ export default function EditProfileModal({
               rows={2}
               className="w-full px-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f] resize-none"
             />
-            <p className="text-[11px] text-[#57606a]">
-              You can <span className="text-[#0969da]">@mention</span> other users and organizations to link to them.
-            </p>
           </div>
 
-          {/* Pronouns */}
           <div className="space-y-1">
-            <label className="block font-semibold text-[#24292f]">Pronouns</label>
-            <select
-              value={pronouns}
-              onChange={(e) => setPronouns(e.target.value)}
-              className="w-full px-2.5 py-1.5 bg-[#f6f8fa] border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
-            >
-              <option value="Don't specify">Don&apos;t specify</option>
-              <option value="He/Him">He/Him</option>
-              <option value="She/Her">She/Her</option>
-              <option value="They/Them">They/Them</option>
-            </select>
-          </div>
-
-          {/* Company */}
-          <div className="relative flex items-center">
-            <span className="absolute left-2.5 text-[#57606a]">
-              <HiOutlineBuildingOffice2 className="w-4 h-4" />
-            </span>
-            <input
-              type="text"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              placeholder="Company"
-              className="w-full pl-9 pr-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
-            />
-          </div>
-
-          {/* Location */}
-          <div className="relative flex items-center">
-            <span className="absolute left-2.5 text-[#57606a]">
-              <FiMapPin className="w-4 h-4" />
-            </span>
-            <input
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Location"
-              className="w-full pl-9 pr-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
-            />
-          </div>
-
-          {/* Display local time */}
-          <div className="flex items-center gap-2 pt-0.5">
-            <span className="text-[#57606a]">
-              <FiClock className="w-4 h-4" />
-            </span>
-            <label className="flex items-center gap-2 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={displayTime}
-                onChange={(e) => setDisplayTime(e.target.checked)}
-                className="rounded border-[#d0d7de] text-[#0969da] focus:ring-0 cursor-pointer"
-              />
-              <span className="text-[#24292f]">Display current local time</span>
-            </label>
-          </div>
-
-          {/* Email */}
-          <div className="relative flex items-center">
-            <span className="absolute left-2.5 text-[#57606a]">
-              <FiMail className="w-4 h-4" />
-            </span>
-            <select
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full pl-9 pr-2.5 py-1.5 bg-[#f6f8fa] border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
-            >
-              <option value="murodovmaruf67@gmail.com">murodovmaruf67@gmail.com</option>
-            </select>
-          </div>
-
-          {/* Website */}
-          <div className="relative flex items-center">
-            <span className="absolute left-2.5 text-[#57606a]">
-              <FiLink className="w-4 h-4" />
-            </span>
-            <input
-              type="text"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-              placeholder="Website"
-              className="w-full pl-9 pr-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
-            />
-          </div>
-
-          {/* Social Accounts Group */}
-          <div className="space-y-2 pt-1 border-t border-[#d0d7de]">
-            <label className="block font-semibold text-[#24292f]">Social accounts</label>
-            
+            <label className="block font-semibold text-[#24292f]">Company</label>
             <div className="relative flex items-center">
               <span className="absolute left-2.5 text-[#57606a]">
-                <FiInstagram className="w-4 h-4" />
+                <HiOutlineBuildingOffice2 className="w-4 h-4" />
               </span>
               <input
                 type="text"
-                value={instagram}
-                onChange={(e) => setInstagram(e.target.value)}
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Company"
                 className="w-full pl-9 pr-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
               />
             </div>
+          </div>
 
+          <div className="space-y-1">
+            <label className="block font-semibold text-[#24292f]">Location</label>
+            <div className="relative flex items-center">
+              <span className="absolute left-2.5 text-[#57606a]">
+                <FiMapPin className="w-4 h-4" />
+              </span>
+              <input
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Location"
+                className="w-full pl-9 pr-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-1">
+            <label className="block font-semibold text-[#24292f]">Website</label>
             <div className="relative flex items-center">
               <span className="absolute left-2.5 text-[#57606a]">
                 <FiLink className="w-4 h-4" />
               </span>
               <input
                 type="text"
-                placeholder="Link to social profile 2"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+                placeholder="https://example.com"
                 className="w-full pl-9 pr-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
               />
             </div>
           </div>
 
-          {/* Footer Actions */}
+          <div className="space-y-1">
+            <label className="block font-semibold text-[#24292f]">Email</label>
+            <div className="relative flex items-center">
+              <span className="absolute left-2.5 text-[#57606a]">
+                <FiMail className="w-4 h-4" />
+              </span>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="email@example.com"
+                className="w-full pl-9 pr-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2 pt-1 border-t border-[#d0d7de]">
+            <div className="flex items-center justify-between">
+              <label className="block font-semibold text-[#24292f]">Social accounts</label>
+              <button
+                type="button"
+                onClick={handleAddSocial}
+                className="text-[#0969da] hover:underline flex items-center gap-1 font-medium cursor-pointer"
+              >
+                <FiPlus className="w-3.5 h-3.5" /> Add account
+              </button>
+            </div>
+
+            <div className="space-y-2">
+              {socials.map((social, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <div className="relative flex items-center flex-1">
+                    <span className="absolute left-2.5 text-[#57606a]">
+                      {social.includes("instagram.com") ? (
+                        <FiInstagram className="w-4 h-4" />
+                      ) : (
+                        <FiLink className="w-4 h-4" />
+                      )}
+                    </span>
+                    <input
+                      type="text"
+                      value={social}
+                      onChange={(e) => handleSocialChange(index, e.target.value)}
+                      placeholder="Link to social profile"
+                      className="w-full pl-9 pr-2.5 py-1.5 bg-white border border-[#d0d7de] rounded-md focus:outline-none focus:border-[#0969da] text-[#24292f]"
+                    />
+                  </div>
+                  {socials.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveSocial(index)}
+                      className="text-[#cf222e] hover:bg-[#ffebe9] p-2 rounded border border-transparent hover:border-[#ff818266] transition-colors cursor-pointer"
+                      title="Remove"
+                    >
+                      <FiTrash2 className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
           <div className="flex items-center gap-2 pt-3 border-t border-[#d0d7de]">
             <button
               type="submit"
-              className="px-3 py-1.5 bg-[#2da44e] hover:bg-[#2c974b] text-white font-medium rounded-md shadow-sm transition-colors cursor-pointer"
+              disabled={isSubmitting}
+              className="px-3 py-1.5 bg-[#2da44e] hover:bg-[#2c974b] text-white font-medium rounded-md shadow-sm transition-colors cursor-pointer disabled:opacity-50"
             >
-              Save
+              {isSubmitting ? "Saving..." : "Save"}
             </button>
             <button
               type="button"

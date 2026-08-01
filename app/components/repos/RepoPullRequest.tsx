@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { 
   FiGitPullRequest, 
   FiCheck, 
@@ -56,7 +56,6 @@ export default function RepoRequest() {
 
   return (
     <div className="py-5 w-[92%] sm:w-[90%] mx-auto font-sans">
-      {/* Верхняя панель: Поиск и кнопка создания */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 my-5">
         <div className="flex items-center gap-2 flex-1">
           <button 
@@ -105,7 +104,6 @@ export default function RepoRequest() {
         </div>
       </div>
 
-      {/* Основной блок списка */}
       <div className="border border-[#d0d7de] rounded-md bg-white overflow-hidden">
         <div className="bg-[#f6f8fa] px-4 py-3 border-b border-[#d0d7de] flex items-center justify-between text-sm text-[#57606a]">
           <div className="flex items-center gap-4 sm:gap-6">

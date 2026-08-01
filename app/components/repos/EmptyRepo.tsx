@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Copy, Laptop, ChevronDown } from 'lucide-react';
+import { Copy} from 'lucide-react';
 
 interface QuickSetupProps {
   username: string;
@@ -52,10 +52,8 @@ const QuickSetup: React.FC<QuickSetupProps> = ({ username, repoName }) => {
   );
 
   return (
-    // Добавлен max-w-4xl, mx-auto и w-full для строгого центрирования
     <div className="w-full max-w-4xl mx-auto px-4 py-8 font-sans text-sm text-[#24292f] antialiased">
       
-      {/* Верхний синий блок */}
       <div className="bg-[#ddf4ff] border border-gray-300 rounded-t-lg p-5 space-y-4 shadow-sm">
         <h2 className="text-xl font-semibold text-gray-900">
           Quick setup — if you’ve done this kind of thing before
@@ -76,7 +74,6 @@ const QuickSetup: React.FC<QuickSetupProps> = ({ username, repoName }) => {
         </p>
       </div>
 
-      {/* Блок: ...or create a new repository on the command line */}
       <div className="bg-white border-x border-b border-gray-300 p-5 space-y-3">
         <h3 className="font-semibold text-gray-900">
           ...or create a new repository on the command line
@@ -96,7 +93,6 @@ const QuickSetup: React.FC<QuickSetupProps> = ({ username, repoName }) => {
         </div>
       </div>
 
-      {/* Блок: ...or push an existing repository from the command line */}
       <div className="bg-white border-x border-b border-gray-300 p-5 space-y-3 rounded-b-lg">
         <h3 className="font-semibold text-gray-900">
           ...or push an existing repository from the command line

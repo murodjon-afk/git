@@ -5,7 +5,6 @@ const Footer: React.FC = () => {
     <footer className="w-full bg-[#0d0f12] text-[#7d8590] text-sm py-16 px-6 border-t border-[#1f242c] font-sans">
       <div className="max-w-[1280px] margin-0 mx-auto">
         
-        {/* Верхняя секция: Логотип и подписка */}
         <div className="mb-10">
           <div className="flex flex-col items-start">
             {/* Иконка GitHub */}
@@ -29,7 +28,6 @@ const Footer: React.FC = () => {
 
         <hr className="border-0 border-t border-[#21262d] my-10" />
 
-        {/* Средняя секция: Ссылки по категориям */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           <div>
             <h3 className="text-[#f0f6fc] text-12 font-semibold uppercase mb-4 tracking-wider">Platform</h3>
@@ -92,7 +90,6 @@ const Footer: React.FC = () => {
 
         <hr className="border-0 border-t border-[#21262d] my-10" />
 
-        {/* Нижняя секция: Копирайт, Сервис и Соцсети */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-xs">
           <div className="flex flex-wrap items-center gap-6">
             <span className="text-[#8b949e]">© {new Date().getFullYear()} GitHub, Inc.</span>

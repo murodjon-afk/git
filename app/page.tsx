@@ -1,4 +1,4 @@
-"use client"; // Исправлено: теперь через пробел и в кавычках
+"use client"; 
 
 import React from 'react';
 import { useState, useEffect } from "react";
@@ -13,16 +13,13 @@ import Footer from "./components/footer"
 export default function GitHubHero() {
   const [login, setLogin] = useState("");
   const [loading, setLoading] = useState(false);
-  const [checkingAuth, setCheckingAuth] = useState(true); // Состояние проверки авторизации
+  const [checkingAuth, setCheckingAuth] = useState(true); 
 
-  // Проверка при загрузке сайта
   useEffect(() => {
     const savedUser = localStorage.getItem("github_user");
     if (savedUser) {
-      // Мгновенный редирект, если токен/логин на месте
       window.location.href = "/dashboard/" + encodeURIComponent(savedUser);
     } else {
-      // Показывать интерфейс только если пользователя нет
       setCheckingAuth(false);
     }
   }, []);
@@ -47,8 +44,6 @@ export default function GitHubHero() {
     }
   };
 
-  // КРИТИЧЕСКИ ВАЖНО: Если идет проверка авторизации, возвращаем null. 
-  // Экран останется чистым, и разметка формы НИКОГДА не мелькнет перед глазами.
   if (checkingAuth) {
     return null; 
   }
@@ -59,7 +54,6 @@ export default function GitHubHero() {
           <Header></Header>
 
 
-        {/* 3. HERO CONTENT */}
         <main className="relative z-10 flex-1 flex flex-col items-center justify-start pt-20 md:pt-28 text-center px-4 w-full">
           
           <h1 className="text-4xl sm:text-6xl md:text-[76px] font-medium tracking-tight text-white leading-[1.05] max-w-[1000px]">
@@ -70,7 +64,6 @@ export default function GitHubHero() {
             Tools and trends evolve, but collaboration endures. With GitHub, developers, agents, and code come together on one platform.
           </p>
 
-          {/* ИСПРАВЛЕННАЯ ФОРМА АВТОРИЗАЦИИ */}
           <form 
             onSubmit={handleLoginSubmit}
             className="w-full max-w-2xl flex flex-col sm:flex-row items-stretch justify-center gap-3 z-10 py-4"
@@ -105,7 +98,6 @@ export default function GitHubHero() {
         </main>
       </div>
       
-      {/* Остальные секции лендинга отрендерятся только если пользователь НЕ авторизован */}
       <GitHubLanding />
       <GitHubWorkflowSection />
       <GitHubScalesSection />

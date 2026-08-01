@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { FiSearch, FiChevronDown, FiStar } from "react-icons/fi";
 import { HiBookOpen } from "react-icons/hi2";
 
@@ -32,7 +32,6 @@ export default function RepoTab({ repos }: RepoTabProps) {
 
   return (
     <div className="w-full flex flex-col min-w-0">
-      {/* Верхняя панель: поиск и фильтры в один ряд */}
       <div className="flex flex-row justify-between items-center gap-3 pb-4 border-b border-[#d0d7de] mb-4 w-full">
         <div className="relative flex-1">
           <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#57606a]" />
@@ -61,7 +60,6 @@ export default function RepoTab({ repos }: RepoTabProps) {
         </div>
       </div>
 
-      {/* Список репозиториев */}
       <div className="divide-y divide-[#d0d7de]">
         {filteredRepos.length > 0 ? (
           filteredRepos.map((repo) => (
@@ -87,7 +85,6 @@ export default function RepoTab({ repos }: RepoTabProps) {
                   </p>
                 )}
 
-                {/* Информация о форке, если есть */}
                 {repo.fork && repo.parent && (
                   <div className="text-xs text-[#57606a] mb-2">
                     Forked from <a href={repo.parent.html_url} target="_blank" rel="noreferrer" className="hover:text-[#0969da] hover:underline">{repo.parent.full_name}</a>
@@ -117,7 +114,6 @@ export default function RepoTab({ repos }: RepoTabProps) {
                 </div>
               </div>
 
-              {/* Блок кнопки Star с мини-графиком активности справа под ней */}
               <div className="flex flex-col items-end gap-2 flex-shrink-0">
                 <div className="flex items-center shadow-sm">
                   <button className="text-xs font-medium text-[#24292f] bg-[#f6f8fa] border border-[#d0d7de] hover:bg-[#f3f4f6] px-2.5 py-1 rounded-l-md flex items-center gap-1">
@@ -127,7 +123,6 @@ export default function RepoTab({ repos }: RepoTabProps) {
                     <FiChevronDown className="w-3 h-3 text-[#57606a]" />
                   </button>
                 </div>
-                {/* Зеленая линия активности справа под кнопкой звезды */}
                 <div className="w-24 h-2 flex items-end">
                   <svg className="w-full h-full overflow-visible" viewBox="0 0 100 10">
                     <path

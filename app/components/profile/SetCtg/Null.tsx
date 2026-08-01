@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { FiExternalLink } from "react-icons/fi";
 
 export default function DevSet() {
@@ -22,7 +21,7 @@ export default function DevSet() {
             Available only on original GitHub
           </h3>
           <p className="text-sm text-[#57606a]">
-            This developer settings section interacts with restricted GitHub systems and is only supported directly on the official GitHub platform.
+            This section interacts with restricted GitHub systems and is only supported directly on the official GitHub platform.
           </p>
         </div>
 

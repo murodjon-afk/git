@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export default function ActionsSecretsAndVariables() {
   const [activeSubTab, setActiveSubTab] = useState<'secrets' | 'variables'>('secrets');
@@ -21,7 +21,6 @@ export default function ActionsSecretsAndVariables() {
           Anyone with collaborator access to this repository can use these secrets and variables for actions. They are not passed to workflows that are triggered by a pull request from a fork.
         </p>
 
-        {/* Sub-tabs */}
         <div className="flex border-b border-[#d0d7de] pt-4">
           <button
             onClick={() => setActiveSubTab('secrets')}
@@ -60,7 +59,6 @@ export default function ActionsSecretsAndVariables() {
               </div>
             </div>
 
-            {/* Repository secrets */}
             <div className="space-y-2 pt-2">
               <h3 className="font-semibold text-base text-[#24292f]">Repository secrets</h3>
               <div className="border border-[#d0d7de] rounded-md p-8 bg-white text-center space-y-3">
@@ -77,7 +75,6 @@ export default function ActionsSecretsAndVariables() {
 
         {activeSubTab === 'variables' && (
           <div className="space-y-6 pt-4">
-            {/* Environment variables */}
             <div className="space-y-2">
               <h3 className="font-semibold text-base text-[#24292f]">Environment variables</h3>
               <div className="border border-[#d0d7de] rounded-md p-8 bg-white text-center space-y-3">
@@ -90,7 +87,6 @@ export default function ActionsSecretsAndVariables() {
               </div>
             </div>
 
-            {/* Repository variables */}
             <div className="space-y-2 pt-2">
               <h3 className="font-semibold text-base text-[#24292f]">Repository variables</h3>
               <div className="border border-[#d0d7de] rounded-md p-8 bg-white text-center space-y-3">

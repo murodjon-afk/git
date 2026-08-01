@@ -1,4 +1,5 @@
 'use client'
+import Link from "next/link";
 import { useState, useEffect } from "react"
 import { GoSearch } from "react-icons/go";
 
@@ -82,11 +83,9 @@ const Repositories = () => {
     return colors[lang] || 'bg-gray-400';
   };
 
-  // Адаптивная генерация номеров страниц (скрывает лишние на мобилках)
   const renderPageNumbers = () => {
     const pages = [];
     for (let i = 1; i <= totalPages; i++) {
-      // Показываем первую, последнюю и соседние с текущей страницы на мобильных, остальные — на десктопе
       const isNearCurrent = Math.abs(i - currentPage) <= 1;
       const isEdge = i === 1 || i === totalPages;
 
@@ -112,17 +111,15 @@ const Repositories = () => {
   return (
     <div className="w-full sm:w-[92%] lg:w-[85%] h-full sm:h-[85%] mx-auto p-3 sm:p-6 font-sans antialiased text-[#1f2328] flex flex-col justify-start">
       
-      {/* Шапка страницы */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5 flex-shrink-0">
         <h1 className="text-xl sm:text-3xl font-semibold text-[#1f2328] tracking-tight">
           My repositories
         </h1>
-        <button className="bg-[#1f883d] hover:bg-[#1a7f37] text-white px-4 py-2 rounded-md text-[14px] font-semibold shadow-sm transition text-center">
+        <Link href={'/newrepo'}className="bg-[#1f883d] hover:bg-[#1a7f37] text-white px-4 py-2 rounded-md text-[14px] font-semibold shadow-sm transition text-center">
           New repository
-        </button>
+        </Link>
       </div>
 
-      {/* Поисковая строка */}
       <div className="flex items-center w-full border border-[#d0d7de] rounded-md bg-white overflow-hidden mb-4 sm:mb-6 text-[13px] sm:text-[15px] flex-shrink-0">
         <div className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 flex items-center bg-white gap-2">
           <span className="text-[12px] sm:text-sm text-[#8250df] bg-[#8250df]/10 px-1.5 py-0.5 rounded font-mono flex-shrink-0">
@@ -139,7 +136,6 @@ const Repositories = () => {
         </div>
       </div>
 
-      {/* Контейнер списка */}
       <div className="border border-[#d0d7de] rounded-md bg-white shadow-sm flex flex-col overflow-hidden flex-1">
         <div className="flex justify-between items-center px-4 sm:px-5 py-3 sm:py-4 bg-[#f6f8fa] border-b border-[#d0d7de] text-[14px] sm:text-[15px] flex-shrink-0">
           <span className="font-semibold">{totalRepos} repositories</span>
@@ -148,7 +144,6 @@ const Repositories = () => {
           </button>
         </div>
 
-        {/* Список репозиториев со скроллом */}
         <div className="divide-y divide-[#d0d7de] overflow-y-auto flex-1">
           {repos.map((repo) => (
             <div key={repo.id} className="p-4 sm:p-5 flex justify-between items-center hover:bg-[#f6f8fa]/30 transition-colors">
@@ -201,7 +196,6 @@ const Repositories = () => {
         </div>
       </div>
 
-      {/* Пагинация (Компактная и адаптивная под мобилки) */}
       <div className="flex justify-center items-center mt-4 sm:mt-6 py-2 select-none flex-shrink-0">
         <button
           disabled={currentPage === 1}

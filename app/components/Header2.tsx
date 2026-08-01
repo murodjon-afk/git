@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { CgProfile } from "react-icons/cg";
 import { IoSettingsOutline } from "react-icons/io5";
 import { TbLogout } from "react-icons/tb";
@@ -81,9 +80,7 @@ const Header = () => {
   return (
     <header className="relative z-50 w-full px-4 md:px-6 h-14 flex items-center justify-between text-[14px] bg-[#f6f8fa] text-[#1f2328] border-b border-[#d0d7de]">
       
-      {/* Левая часть */}
       <div className="flex items-center gap-3">
-        {/* Бургер меню — показывается на мобилках и планшетах до 768px (md) */}
         {isLoaded && username && (
           <Drawer open={isOpen} onOpenChange={setIsOpen} swipeDirection="left">
             <button 
@@ -119,7 +116,6 @@ const Header = () => {
                   </div>
                 </DrawerHeader>
 
-                {/* Навигация внутри мобильного бургер-меню (< 768px) */}
                 <div className="py-3 flex flex-col gap-4 text-[#1f2328] text-sm font-normal">
                   <div className="flex flex-col gap-1">
                     <Link 
@@ -178,7 +174,6 @@ const Header = () => {
         <span className="text-[#1f2328] font-semibold text-[14px] ml-1 select-none">{title}</span>
       </div>
 
-      {/* Правая часть */}
       <div className="flex items-center gap-2">
         <Search />
 
@@ -206,7 +201,6 @@ const Header = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Иконки быстрого доступа скрываются на планшетах/мобилках (< 768px), переносясь в бургер-меню */}
           <Link href="/issues" className="hidden md:block">
             <button className="p-1.5 text-[#57606a] hover:bg-[#eaeef2] rounded-md border border-[#d0d7de] bg-white flex items-center justify-center h-7 w-7 transition-colors cursor-pointer">
               <GoIssueOpened size={16} />

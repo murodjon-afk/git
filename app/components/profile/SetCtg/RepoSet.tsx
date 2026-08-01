@@ -1,19 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { FiBook, FiTrash2, FiUsers } from "react-icons/fi";
 
 interface Repository {
   id: number;
   name: string;
   full_name: string;
-  size: number; // in KB from GitHub API
+  size: number; 
   owner: {
     login: string;
   };
   private: boolean;
   html_url: string;
-  collaborators_count?: number; // Optional if fetched separately
+  collaborators_count?: number; 
 }
 
 export default function ReposSet() {
@@ -33,7 +33,6 @@ export default function ReposSet() {
     async function fetchRepos() {
       try {
         setLoading(true);
-        // Using token from .env.local if available
         const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
         const headers: HeadersInit = {
           Accept: "application/vnd.github+json",
@@ -42,7 +41,6 @@ export default function ReposSet() {
           headers["Authorization"] = `Bearer ${token}`;
         }
 
-        // Fetch user repositories (both owned and collaborated/accessible based on token)
         const res = await fetch(`https://api.github.com/users/${storedUser}/repos?per_page=100&sort=updated`, {
           headers,
         });
@@ -63,7 +61,6 @@ export default function ReposSet() {
     fetchRepos();
   }, []);
 
-  // Group repositories by owner login
   const groupedRepos = repos.reduce((acc, repo) => {
     const ownerLogin = repo.owner.login;
     if (!acc[ownerLogin]) {
@@ -73,7 +70,6 @@ export default function ReposSet() {
     return acc;
   }, {} as Record<string, Repository[]>);
 
-  // Helper to format repo size (KB to KB/MB)
   const formatSize = (sizeInKB: number) => {
     if (sizeInKB >= 1024) {
       return `${(sizeInKB / 1024).toFixed(1)} MB`;
@@ -83,7 +79,6 @@ export default function ReposSet() {
 
   return (
     <div className="max-w-4xl space-y-8">
-      {/* Repository default branch */}
       <div className="space-y-3 pb-6 border-b border-[#d0d7de]">
         <h2 className="text-2xl font-normal text-[#24292f]">Repository default branch</h2>
         <p className="text-sm text-[#57606a] max-w-3xl">
@@ -109,7 +104,6 @@ export default function ReposSet() {
         </div>
       </div>
 
-      {/* Commit comments */}
       <div className="space-y-3 pb-6 border-b border-[#d0d7de]">
         <h2 className="text-2xl font-normal text-[#24292f]">Commit comments</h2>
         <p className="text-sm text-[#57606a] max-w-3xl">
@@ -131,11 +125,9 @@ export default function ReposSet() {
         </div>
       </div>
 
-      {/* Repositories Section */}
       <div className="space-y-4">
         <h2 className="text-2xl font-normal text-[#24292f]">Repositories</h2>
 
-        {/* Tabs */}
         <div className="border border-[#d0d7de] rounded-md bg-white">
           <div className="flex border-b border-[#d0d7de] px-4 pt-3 gap-6 text-sm">
             <button

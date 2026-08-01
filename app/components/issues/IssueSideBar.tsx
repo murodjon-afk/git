@@ -37,7 +37,6 @@ const IssueSideBar = ({ activeTab, setActiveTab }: IssueSideBarProps) => {
 
   return (
     <>
-      {/* Мобильный/Планшетный хедер-триггер (теперь в обычном потоке, ничего не перекрывает!) */}
       <div className="lg:hidden flex items-center justify-between px-4 py-2.5 bg-white border-b border-[#d0d7de] w-full shrink-0">
         <div className="flex items-center gap-2 text-sm font-semibold text-[#24292f]">
           <ActiveIcon size={17} className="text-[#0969da]" />
@@ -53,7 +52,6 @@ const IssueSideBar = ({ activeTab, setActiveTab }: IssueSideBarProps) => {
         </button>
       </div>
 
-      {/* Выпадающий список для мобильных (появляется под кнопкой с анимацией) */}
       {isOpen && (
         <div className="lg:hidden absolute top-[97px] left-0 w-full bg-white border-b border-[#d0d7de] shadow-lg z-50 px-3 py-2 space-y-1 animate-fadeIn">
           {topItems.map((item) => {
@@ -78,7 +76,6 @@ const IssueSideBar = ({ activeTab, setActiveTab }: IssueSideBarProps) => {
         </div>
       )}
 
-      {/* Десктопный сайдбар (скрыта на мобилках, работает как раньше на lg+) */}
       <aside className="hidden lg:flex w-[296px] h-full bg-white border-r border-[#d0d7de] flex-col justify-between flex-shrink-0">
         <div className="px-3 py-4">
           {topItems.map((item) => {

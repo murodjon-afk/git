@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { GoIssueOpened, GoSearch } from "react-icons/go";
 import { FiCheckCircle, FiArchive, FiUser, FiArrowDown } from "react-icons/fi";
-
+import NewIssue from "../components/NewIssue";
 interface GitHubIssue {
   id: number;
   number: number;
@@ -35,10 +34,11 @@ function formatRelativeTime(dateString: string): string {
 
 export default function Issues() {
   const [issues, setIssues] = useState<GitHubIssue[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const fetchIssues = async () => {
-      const username = localStorage.getItem("github_user") || "murodjon-afk";
+      const username = localStorage.getItem("github_user") || "";
 
       try {
         const response = await fetch(
@@ -68,24 +68,21 @@ export default function Issues() {
   return (
     <div className="w-full sm:w-[92%] lg:w-[85%] h-full sm:h-[85%] mx-auto p-3 sm:p-6 font-sans antialiased text-[#1f2328] flex flex-col justify-start">
       
-      {/* Top Header Section */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 sm:mb-5 flex-shrink-0">
         <h1 className="text-xl sm:text-3xl font-semibold text-[#1f2328] tracking-tight">
           All Issues created by me
         </h1>
-        <Link 
-          href="/" 
+        <button
+           type="button" onClick={() => setIsModalOpen(true)}  
           className="bg-[#1a7f37] hover:bg-[#1a7f37]/90 text-white text-[14px] font-semibold px-4 py-2 rounded-md shadow-sm transition-colors text-center"
         >
           New issue
-        </Link>
+        </button>
       </div>
 
-      {/* Styled Mock Search Bar */}
       <div className="flex items-center w-full border border-[#d0d7de] rounded-md bg-white overflow-hidden mb-4 sm:mb-6 text-[13px] sm:text-[15px] flex-shrink-0">
         <div className="flex-1 px-3 sm:px-4 py-2 sm:py-2.5 flex flex-wrap gap-1.5 sm:gap-2 items-center bg-[#ffffff]">
           
-          {/* is:issue */}
           <span className="flex items-center gap-1 text-[#57606a]">
             <span className="hidden sm:inline">is:</span>
             <span className="text-[#0969da] bg-[#ddf4ff] px-1.5 py-0.5 rounded-sm font-medium flex items-center gap-1">
@@ -94,7 +91,6 @@ export default function Issues() {
             </span>
           </span>
 
-          {/* state:open */}
           <span className="flex items-center gap-1 text-[#57606a]">
             <span className="hidden sm:inline">state:</span>
             <span className="text-[#0969da] bg-[#ddf4ff] px-1.5 py-0.5 rounded-sm font-medium flex items-center gap-1">
@@ -103,7 +99,6 @@ export default function Issues() {
             </span>
           </span>
 
-          {/* archived:false */}
           <span className="flex items-center gap-1 text-[#57606a]">
             <span className="hidden sm:inline">archived:</span>
             <span className="text-[#0969da] bg-[#ddf4ff] px-1.5 py-0.5 rounded-sm font-medium flex items-center gap-1">
@@ -112,7 +107,6 @@ export default function Issues() {
             </span>
           </span>
 
-          {/* author:@me */}
           <span className="flex items-center gap-1 text-[#57606a]">
             <span className="hidden sm:inline">author:</span>
             <span className="text-[#8250df] bg-[#f5e8ff] px-1.5 py-0.5 rounded-sm font-medium flex items-center gap-1">
@@ -121,7 +115,6 @@ export default function Issues() {
             </span>
           </span>
 
-          {/* sort:updated-desc */}
           <span className="hidden md:flex items-center gap-1 text-[#57606a]">
             <span>sort:</span>
             <span className="text-[#0969da] bg-[#ddf4ff] px-1.5 py-0.5 rounded-sm font-medium">
@@ -135,9 +128,7 @@ export default function Issues() {
         </div>
       </div>
 
-      {/* Issues Table Container */}
       <div className="w-full border border-[#d0d7de] rounded-md bg-white shadow-sm flex flex-col overflow-hidden flex-1">
-        {/* Table Header */}
         <div className="flex items-center justify-between px-4 sm:px-5 py-3 sm:py-4 border-b border-[#d8dee4] bg-[#f6f8fa] flex-shrink-0">
           <span className="text-[14px] sm:text-[15px] font-semibold text-[#1f2328]">
             {issues.length} results
@@ -149,7 +140,6 @@ export default function Issues() {
           </button>
         </div>
 
-        {/* Issues List with Scroll */}
         <div className="overflow-y-auto flex-1">
           {issues.map((issue) => {
             const repoName = issue.repository_url.split("/repos/")[1] || "";
@@ -194,6 +184,10 @@ export default function Issues() {
           )}
         </div>
       </div>
+        <NewIssue
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+            />
     </div>
   );
 }

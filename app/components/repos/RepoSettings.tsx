@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import SeetingTab from '../repos/SettingTab'; 
 import General from "./RepoSettingCtg/GeneralSetting";
 import Branch from "./RepoSettingCtg/BranchSetting";
@@ -86,10 +86,8 @@ export default function RepoSettings() {
     <div className="min-h-screen bg-[#ffffff] text-[#24292f] font-sans flex justify-center p-3 sm:p-6">
       <div className="w-full max-w-7xl flex flex-col lg:flex-row gap-4 lg:gap-8 lg:pr-10">
         
-        {/* Адаптивный сайдбар (переключается в бургер на мобилках) */}
         <SeetingTab currentTab={activeTab} onSelectTab={setActiveTab} />
 
-        {/* Основной контент */}
         <main className="flex-1 bg-white min-w-0 overflow-x-auto">
           {activeTab === 'general' && (
             <General 

@@ -50,7 +50,6 @@ const Issues = () => {
         }
 
         const data: Issue[] = await response.json();
-        // GitHub Issues API также возвращает Pull Requests, отфильтруем их, если нужно оставить чисто Issues
         const pureIssues = data.filter((item: any) => !item.pull_request);
         setIssues(pureIssues);
       } catch (err) {
@@ -62,10 +61,9 @@ const Issues = () => {
     };
 
     fetchIssues();
-  }, [isOpenFilter]); // Перезапускаем запрос при смене табов Open/Closed
+  }, [isOpenFilter]); 
 
-  // Вычисляем количество для счетчиков на основе ответа или логики интерфейса
-  const openCount = isOpenFilter ? issues.length : 0; // Для полноценных счетчиков без перезапросов обычно используют GitHub Search API, здесь имитируем по состоянию референса
+  const openCount = isOpenFilter ? issues.length : 0; 
   const closedCount = !isOpenFilter ? issues.length : 0;
 
   return (
@@ -76,7 +74,6 @@ const Issues = () => {
         </div>
       )}
 
-      {/* Заголовок и кнопка */}
       <div className="w-full flex justify-between items-center mb-4">
         <h1 className="text-xl font-semibold">Assigned to me</h1>
         <button className="text-sm bg-[#1f883d] hover:bg-[#1a7f37] text-white py-1.5 px-3 font-medium cursor-pointer rounded-md shadow-sm transition-colors">
@@ -84,7 +81,6 @@ const Issues = () => {
         </button>
       </div>
 
-      {/* Имитация кастомного поискового инпута с тегами из референса */}
       <div className="relative w-full mb-4 flex items-center bg-[#f6f8fa] border border-[#d0d7de] rounded-md focus-within:border-[#0969da] focus-within:ring-1 focus-within:ring-[#0969da] shadow-sm transition-all h-8">
         <div className="flex-1 flex items-center px-3 overflow-x-auto whitespace-nowrap scrollbar-none text-sm text-[#57606a]">
           <span className="text-[#0969da] bg-[#ddf4ff] px-1.5 py-0.5 rounded mr-1.5 text-[13px]">is:issue</span>
@@ -102,9 +98,7 @@ const Issues = () => {
         </div>
       </div>
 
-      {/* Таблица */}
       <div className="border border-[#d0d7de] rounded-lg overflow-hidden">
-        {/* Шапка таблицы с фильтрами */}
         <div className="flex items-center justify-between bg-[#f6f8fa] border-b border-[#d0d7de] px-4 py-3 text-sm text-[#57606a]">
           <div className="flex items-center gap-4">
             <input
@@ -112,7 +106,6 @@ const Issues = () => {
               className="w-3.5 h-3.5 rounded border-[#d0d7de] text-[#0969da] focus:ring-[#0969da] cursor-pointer"
             />
 
-            {/* Вкладка Open */}
             <button
               onClick={() => setIsOpenFilter(true)}
               className={`flex items-center gap-1.5 cursor-pointer hover:text-[#0969da] ${
@@ -139,7 +132,6 @@ const Issues = () => {
             </button>
           </div>
 
-          {/* Правые фильтры */}
           <div className="flex items-center gap-5">
             {["Author", "Labels", "Projects", "Milestones", "Assignees"].map((filter) => (
               <button key={filter} className="flex items-center gap-1 hover:text-[#24292f] cursor-pointer">
@@ -154,14 +146,12 @@ const Issues = () => {
           </div>
         </div>
 
-        {/* Лоадер */}
         {loading && (
           <div className="flex justify-center items-center min-h-[200px] text-gray-500 bg-white">
             Loading...
           </div>
         )}
 
-        {/* Вывод контента / Состояние "No results" */}
         {!loading && (
           <div className="bg-white divide-y divide-[#d0d7de]">
             {issues.length === 0 ? (

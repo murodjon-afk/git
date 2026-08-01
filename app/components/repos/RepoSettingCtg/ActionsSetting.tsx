@@ -1,18 +1,15 @@
 'use client';
 
-import React from 'react';
 
 export default function ActionsSetting() {
   return (
     <div className="space-y-8">
-      {/* Actions permissions */}
       <div>
         <h2 className="text-2xl font-normal pb-4 border-b border-[#d0d7de]">
           Actions permissions
         </h2>
 
         <div className="mt-6 space-y-4">
-          {/* Radio 1 */}
           <div className="flex items-start gap-3">
             <input 
               type="radio" 
@@ -28,7 +25,6 @@ export default function ActionsSetting() {
             </div>
           </div>
 
-          {/* Radio 2 */}
           <div className="flex items-start gap-3">
             <input 
               type="radio" 
@@ -43,7 +39,6 @@ export default function ActionsSetting() {
             </div>
           </div>
 
-          {/* Radio 3 */}
           <div className="flex items-start gap-3">
             <input 
               type="radio" 
@@ -58,7 +53,6 @@ export default function ActionsSetting() {
             </div>
           </div>
 
-          {/* Radio 4 */}
           <div className="flex items-start gap-3">
             <input 
               type="radio" 
@@ -74,7 +68,6 @@ export default function ActionsSetting() {
             </div>
           </div>
 
-          {/* Checkbox */}
           <div className="flex items-start gap-3 pt-2">
             <input 
               type="checkbox" 
@@ -94,7 +87,6 @@ export default function ActionsSetting() {
         </div>
       </div>
 
-      {/* Artifact and log retention */}
       <div className="pt-6 border-t border-[#d0d7de]">
         <h3 className="text-xl font-normal mb-1">Artifact and log retention</h3>
         <p className="text-xs text-[#57606a] mb-4">Choose the repository settings for artifacts and logs.</p>
@@ -119,7 +111,6 @@ export default function ActionsSetting() {
         </div>
       </div>
 
-      {/* Approval for running fork pull request workflows from contributors */}
       <div className="pt-6 border-t border-[#d0d7de]">
         <h3 className="text-xl font-normal mb-1">Approval for running fork pull request workflows from contributors</h3>
         <p className="text-xs text-[#57606a] mb-6">
@@ -127,7 +118,6 @@ export default function ActionsSetting() {
         </p>
 
         <div className="space-y-4">
-          {/* Radio 1 */}
           <div className="flex items-start gap-3">
             <input 
               type="radio" 
@@ -142,7 +132,6 @@ export default function ActionsSetting() {
             </div>
           </div>
 
-          {/* Radio 2 */}
           <div className="flex items-start gap-3">
             <input 
               type="radio" 
@@ -158,7 +147,6 @@ export default function ActionsSetting() {
             </div>
           </div>
 
-          {/* Radio 3 */}
           <div className="flex items-start gap-3">
             <input 
               type="radio" 
@@ -191,7 +179,6 @@ export default function ActionsSetting() {
           <a href="#" className="text-[#0969da] hover:underline">Learn more about managing permissions.</a>
         </p>
 
-        {/* Radio 1 */}
         <div className="flex items-start gap-3 pt-2">
           <input 
             type="radio" 
@@ -206,7 +193,6 @@ export default function ActionsSetting() {
           </div>
         </div>
 
-        {/* Radio 2 */}
         <div className="flex items-start gap-3">
           <input 
             type="radio" 

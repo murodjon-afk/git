@@ -2,12 +2,11 @@
 
 import React, { useState } from 'react';
 
-// Данные для карточек (в соответствии с картинкой)
 const CARDS_DATA = [
   {
     id: 1,
     logo: "Figma",
-    isTextLogo: true, // У Figma просто текстовый логотип на картинке
+    isTextLogo: true, 
     category: "Technology",
     title: "Figma streamlines development and strengthens security"
   },
@@ -15,7 +14,6 @@ const CARDS_DATA = [
     id: 2,
     logo: (
       <div className="flex items-center gap-2">
-        {/* Простой SVG аналог значка Mercedes */}
         <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
           <circle cx="12" cy="12" r="10" />
           <path d="M12 2v20M12 12l-8.66-5M12 12l8.66-5" />
@@ -31,7 +29,6 @@ const CARDS_DATA = [
     id: 3,
     logo: (
       <div className="flex items-center gap-2">
-        {/* Упрощенный SVG аналог Mercado Libre (рукопожатие/овал) */}
         <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
           <path d="M16 8a4 4 0 90-8 0c0 4 4 8 4 8s4-4 4-8z" />
           <path d="M12 10a2 2 0 100-4 2 2 0 000 4z" />
@@ -56,9 +53,7 @@ export default function GitHubScalesSection() {
   return (
     <section className="w-full bg-[#05081a] text-white font-sans py-24 flex flex-col items-center overflow-hidden antialiased">
       
-      {/* 1. ЭМОДЗИ И ЗАГОЛОВОК */}
       <div className="flex flex-col items-center text-center px-4 max-w-3xl mb-10">
-        {/* Желтый 3D-наггетс / эмодзи по центру */}
         <div className="text-4xl mb-6 select-none animate-bounce duration-1000">
           🐣
         </div>
@@ -71,7 +66,6 @@ export default function GitHubScalesSection() {
         </h2>
       </div>
 
-      {/* 2. ПЕРЕКЛЮЧАТЕЛЬ (ТАБЫ С ОГРАНИЧЕНИЕМ) */}
       <div className="mb-16 p-1 rounded-full bg-[#161b22]/30 border border-[#30363d]/60 backdrop-blur-sm flex items-center gap-1">
         {FILTERS.map((filter) => (
           <button
@@ -88,19 +82,15 @@ export default function GitHubScalesSection() {
         ))}
       </div>
 
-      {/* 3. СЕТКА С КАРТОЧКАМИ (Точные пропорции и рамки из референса image_1ae5ec.png) */}
       <div className="w-full border-t border-[#30363d]/40 grid grid-cols-1 md:grid-cols-5 bg-black">
         
-        {/* Левая пустая заглушка для эффекта "бесконечных колонок" */}
         <div className="hidden md:block border-r border-[#30363d]/40 bg-transparent" />
 
-        {/* Рендеринг карточек */}
         {CARDS_DATA.map((card) => (
           <div 
             key={card.id}
             className="group relative border-b md:border-b-0 border-r border-[#30363d]/40 p-8 md:p-12 min-h-[420px] flex flex-col justify-between transition-colors duration-300 hover:bg-[#0d1117]/30 cursor-pointer"
           >
-            {/* Верхняя часть: Логотип */}
             <div className="flex justify-center items-center h-20 text-center">
               {card.isTextLogo ? (
                 <span className="text-3xl font-medium tracking-tight text-white">{card.logo}</span>
@@ -109,7 +99,6 @@ export default function GitHubScalesSection() {
               )}
             </div>
 
-            {/* Нижняя часть: Описание и Категория */}
             <div className="flex flex-col items-center text-center mt-auto">
               <span className="text-[11px] font-medium uppercase tracking-wider text-[#8b949e] mb-3">
                 {card.category}
@@ -119,12 +108,10 @@ export default function GitHubScalesSection() {
               </p>
             </div>
             
-            {/* Тонкая линия подсветки снизу при наведении */}
             <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-purple-500/0 to-transparent group-hover:via-purple-500/40 transition-all duration-500" />
           </div>
         ))}
 
-        {/* Правая пустая заглушка */}
         <div className="hidden md:block bg-transparent" />
 
       </div>

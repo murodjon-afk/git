@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { 
   FiSettings, 
   FiGitBranch, 
@@ -36,7 +36,6 @@ export default function SeetingTab({ currentTab, onSelectTab }: SeetingTabProps)
 
   return (
     <>
-      {/* Мобильный/Планшетный хедер-триггер (показывается только на экранах < lg) */}
       <div className="lg:hidden flex items-center justify-between px-4 py-2.5 bg-white border border-[#d0d7de] rounded-md w-full mb-4 shrink-0">
         <div className="flex items-center gap-2 text-sm font-semibold text-[#24292f]">
           <span className="text-[#0969da]">{activeItem?.icon}</span>
@@ -52,7 +51,6 @@ export default function SeetingTab({ currentTab, onSelectTab }: SeetingTabProps)
         </button>
       </div>
 
-      {/* Выпадающий список для мобильных под хедерами */}
       {isOpen && (
         <div className="lg:hidden w-full bg-white border border-[#d0d7de] rounded-md shadow-lg mb-4 p-2 space-y-1 z-50">
           {menuItems.map((item) => {
@@ -77,7 +75,6 @@ export default function SeetingTab({ currentTab, onSelectTab }: SeetingTabProps)
         </div>
       )}
 
-      {/* Десктопный сайдбар (скрыт на мобилках, виден на lg+) */}
       <aside className="hidden lg:block w-64 shrink-0 space-y-1">
         {menuItems.map((item) => {
           const isActive = currentTab === item.id;

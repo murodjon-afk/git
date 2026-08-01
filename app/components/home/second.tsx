@@ -3,22 +3,15 @@ import { Files, MessageSquare, Terminal, Settings, Sparkles, Send, Play } from '
 
 export default function GitHubLanding() {
   return (
-    // Изменили базовый фон на темно-синий из верхней точки градиента, чтобы не было швов
     <div className="relative min-h-screen w-screen max-w-full bg-[#05081a] text-white font-sans overflow-x-hidden flex flex-col antialiased">
       
-      {/* ========================================== */}
-      {/* 2. СЕКЦИЯ С ТЕРМИНАЛОМ/ИНТЕРФЕЙСОМ COPILOT */}
-      {/* ========================================== */}
-      {/* Отрегулирован градиент: добавлено кастомное свойство для точности отображения */}
+     
       <section className="relative w-full min-h-screen flex items-center justify-center p-4 md:p-12 lg:p-20 mt-[-40px] z-10 bg-[#05081a]">
         
-        {/* Идеальное размытое неоновое свечение (Glow) строго за редактором */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[95%] md:w-[900px] h-[500px] md:h-[600px] rounded-full opacity-40 pointer-events-none blur-[110px] md:blur-[150px] z-0 bg-gradient-to-r from-[#7928ca] via-[#b624ff] to-[#0070f3]" />
 
-        {/* Окно Редактора (Glassmorphism эффект усилен за счет backdrop-blur) */}
         <div className="relative z-10 w-full max-w-[1150px] h-[600px] rounded-xl border border-[#30363d]/60 bg-[#0d1117]/85 text-[#c9d1d9] font-mono text-xs flex flex-col shadow-[0_0_60px_rgba(0,0,0,0.7)] backdrop-blur-xl">
           
-          {/* Шапка окна редактора */}
           <div className="h-11 border-b border-[#21262d] flex items-center px-4 justify-between bg-[#161b22]/90 rounded-t-xl">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
@@ -29,10 +22,8 @@ export default function GitHubLanding() {
             <div />
           </div>
 
-          {/* Рабочая область */}
           <div className="flex-1 flex overflow-hidden">
             
-            {/* Левый Сидбар иконок */}
             <div className="w-12 border-r border-[#21262d] bg-[#0d1117]/60 flex flex-col items-center py-4 gap-6 text-[#8b949e]">
               <Files size={18} className="cursor-pointer hover:text-white transition-colors" />
               <MessageSquare size={18} className="text-[#58a6ff] cursor-pointer" />
@@ -41,14 +32,12 @@ export default function GitHubLanding() {
               <Settings size={18} className="cursor-pointer hover:text-white transition-colors" />
             </div>
 
-            {/* Блок 1: Панель Copilot Chat */}
             <div className="w-[43%] border-r border-[#21262d] bg-[#0d1117]/40 flex flex-col p-4 overflow-y-auto justify-between select-none">
               <div className="flex-1 flex flex-col">
                 <div className="text-[10px] text-[#8b949e] uppercase font-bold tracking-wider mb-4 flex items-center gap-1.5 font-sans">
                   <Sparkles size={12} className="text-[#58a6ff]" /> GitHub Copilot: Chat
                 </div>
                 
-                {/* Код-превью в чате */}
                 <div className="space-y-4 text-[11px] leading-relaxed">
                   <div className="bg-[#161b22]/80 border border-[#21262d] rounded-md p-3 font-mono text-[#c9d1d9] overflow-x-auto whitespace-pre">
                     <span className="text-[#ff7b72]">{`} else if `}</span>
@@ -69,7 +58,6 @@ export default function GitHubLanding() {
                     <span className="text-[#ff7b72]">{`}`}</span>
                   </div>
 
-                  {/* Описание генерации */}
                   <div className="font-sans space-y-2 text-[#8b949e]">
                     <div className="text-white font-semibold text-xs">Explanation</div>
                     <ul className="list-none space-y-2 text-[11px]">
@@ -91,7 +79,6 @@ export default function GitHubLanding() {
                 </div>
               </div>
 
-              {/* Инпут чата */}
               <div className="relative mt-4">
                 <input 
                   type="text" 
@@ -102,10 +89,8 @@ export default function GitHubLanding() {
               </div>
             </div>
 
-            {/* Блок 2: Текстовый редактор кода */}
             <div className="flex-1 bg-[#161b22]/10 flex flex-col relative">
               
-              {/* Вкладки файлов */}
               <div className="h-9 border-b border-[#21262d] bg-[#0d1117]/80 flex items-center text-[11px] text-[#8b949e]">
                 <div className="h-full px-4 flex items-center bg-[#161b22]/40 text-[#c9d1d9] border-t-2 border-[#f78166] border-r border-[#21262d] cursor-pointer backdrop-blur-sm">
                   <span>game.ts</span>
@@ -118,7 +103,6 @@ export default function GitHubLanding() {
                 </div>
               </div>
 
-              {/* Поле самого кода */}
               <div className="flex-1 p-4 overflow-y-auto flex gap-4 font-mono text-[11px] leading-[1.4rem] select-text">
                 <div className="text-right text-[#484f58] min-w-[24px] tracking-normal select-none">
                   {Array.from({ length: 36 }, (_, i) => 75 + i).map(num => (
@@ -160,7 +144,6 @@ export default function GitHubLanding() {
                 </div>
               </div>
 
-              {/* Плавающая кнопка Play */}
               <button className="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-[#21262d] hover:bg-[#30363d] text-[#c9d1d9] flex items-center justify-center border border-[#30363d] transition-all shadow-lg group">
                 <Play size={13} className="fill-[#c9d1d9] ml-0.5 group-hover:scale-105 transition-transform" />
               </button>

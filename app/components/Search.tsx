@@ -3,12 +3,12 @@ import { useEffect, useState } from "react";
 
 interface SearchResultItem {
   id: number;
-  name?: string; // для репозиториев
-  full_name?: string; // для репозиториев
-  login?: string; // для пользователей
+  name?: string; 
+  full_name?: string; 
+  login?: string; 
   html_url: string;
-  avatar_url?: string; // для пользователей
-  description?: string; // для репозиториев
+  avatar_url?: string; 
+  description?: string; 
 }
 
 const Search = () => {
@@ -23,7 +23,6 @@ const Search = () => {
 
   const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
 
-  // Закрытие по Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -35,7 +34,6 @@ const Search = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Поиск по GitHub API (репозитории и пользователи)
   useEffect(() => {
     if (!query.trim()) {
       setResults({ repositories: [], users: [] });
@@ -54,7 +52,6 @@ const Search = () => {
           headers["Authorization"] = `Bearer ${token}`;
         }
 
-        // Параллельный запрос для поиска репозиториев и пользователей
         const [repoRes, userRes] = await Promise.all([
           fetch(`https://api.github.com/search/repositories?q=${encodeURIComponent(query)}&per_page=5`, { headers }),
           fetch(`https://api.github.com/search/users?q=${encodeURIComponent(query)}&per_page=5`, { headers }),
@@ -83,7 +80,6 @@ const Search = () => {
 
   return (
     <>
-      {/* Кнопка поиска */}
       <div
         className="hidden md:flex items-center bg-white border border-[#d0d7de] rounded-md px-2.5 py-1 w-64 justify-between text-[#57606a] cursor-pointer hover:bg-[#f6f8fa] transition h-8"
         onClick={() => setModal(true)}
@@ -100,21 +96,17 @@ const Search = () => {
         </div>
       </div>
 
-      {/* Модальное окно */}
       {modal && (
         <div
           className="fixed inset-0 z-[9999] flex items-start justify-center pt-3"
           onClick={() => setModal(false)}
         >
-          {/* Затемнение */}
           <div className="absolute inset-0 bg-black/50 backdrop-blur-[2px]" />
 
-          {/* Контент */}
           <div
             onClick={(e) => e.stopPropagation()}
             className="relative z-10 w-[75%] max-w-[95%] bg-white rounded-xl border border-[#d0d7de] shadow-2xl overflow-hidden"
           >
-            {/* Header */}
             <div className="p-4 border-b border-[#d8dee4]">
               <div className="relative">
                 <GoSearch
@@ -133,7 +125,6 @@ const Search = () => {
               </div>
             </div>
 
-            {/* Body */}
             <div className="max-h-[400px] overflow-y-auto p-4">
               {loading ? (
                 <div className="py-12 text-center text-sm text-[#656d76]">Поиск...</div>
@@ -147,7 +138,6 @@ const Search = () => {
                 <div className="py-12 text-center text-sm text-[#656d76]">Ничего не найдено</div>
               ) : (
                 <div className="space-y-6">
-                  {/* Репозитории */}
                   {results.repositories.length > 0 && (
                     <div>
                       <h3 className="text-xs font-semibold text-[#57606a] uppercase tracking-wider mb-2">
@@ -176,7 +166,6 @@ const Search = () => {
                     </div>
                   )}
 
-                  {/* Пользователи */}
                   {results.users.length > 0 && (
                     <div>
                       <h3 className="text-xs font-semibold text-[#57606a] uppercase tracking-wider mb-2">

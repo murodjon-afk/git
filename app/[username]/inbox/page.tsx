@@ -70,10 +70,8 @@ const Inbox = () => {
   return (
     <div className="w-full sm:w-[92%] lg:w-[85%] h-full sm:h-[85%] mx-auto p-3 sm:p-6 font-sans antialiased text-gray-900 bg-white flex flex-col justify-start">
       
-      {/* Top Filter & Search Section */}
       <div className="flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-3 mb-4 sm:mb-6 flex-shrink-0">
         
-        {/* Tabs: All / Unread */}
         <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-md w-fit border border-gray-200">
           <button
             onClick={() => setActiveTab('all')}
@@ -93,7 +91,6 @@ const Inbox = () => {
           </button>
         </div>
 
-        {/* Search Input */}
         <div className="flex-1 max-w-xl relative">
           <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
             <GoSearch size={15} />
@@ -107,7 +104,6 @@ const Inbox = () => {
           />
         </div>
 
-        {/* Sort & Group Dropdowns (Hidden on very small screens or wrapped) */}
         <div className="hidden sm:flex items-center gap-2 flex-wrap">
           <div className="flex items-center gap-1 bg-white border border-gray-300 px-3 py-1.5 rounded-md text-xs sm:text-sm text-gray-700 cursor-pointer hover:bg-gray-50">
             <span className="text-gray-500">Sort by:</span>
@@ -126,7 +122,7 @@ const Inbox = () => {
         </div>
       </div>
 
-      {/* Баннер «Clear out the clutter» */}
+
       {showBanner && (
         <div className="bg-blue-50/50 border border-blue-200/80 rounded-lg p-3 sm:p-4 mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 flex-shrink-0">
           <div className="flex items-start gap-3">
@@ -161,7 +157,6 @@ const Inbox = () => {
         </div>
       )}
 
-      {/* Список уведомлений */}
       <div className="border border-gray-300 rounded-lg bg-white shadow-sm flex flex-col overflow-hidden flex-1">
         <div className="flex items-center px-4 py-2.5 border-b border-gray-200 bg-gray-50/70 text-xs font-medium text-gray-700 flex-shrink-0">
           <div className="flex items-center gap-2">

@@ -1,4 +1,3 @@
-import React from 'react';
 import { ShieldCheck, Lock, Key, CheckCircle2, ExternalLink } from 'lucide-react';
 
 export default function SecurityFooterLightComponent() {
@@ -6,7 +5,6 @@ export default function SecurityFooterLightComponent() {
     <div className="w-full h-[100vh] flex items-center justify-center bg-white p-6 font-sans">
       <div className="w-[90%] h-[90%] bg-white border border-gray-200 rounded-xl flex flex-col overflow-hidden shadow-sm text-gray-900">
         
-        {/* Header Bar */}
         <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <ShieldCheck className="w-6 h-6 text-green-600" />

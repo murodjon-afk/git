@@ -1,15 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   FiUser, 
   FiSettings, 
   FiMail, 
-  FiLock, 
-  FiKey, 
   FiBook, 
   FiCode, 
-  FiGlobe 
 } from 'react-icons/fi';
 
 interface AccountSettingTabProps {
@@ -55,16 +52,12 @@ export default function AccountSettingTab({ currentTab, onSelectTab }: AccountSe
     { id: 'profile', label: 'Public profile', icon: <FiUser className="text-base" /> },
     { id: 'account', label: 'Account', icon: <FiSettings className="text-base" /> },
     { id: 'emails', label: 'Emails', icon: <FiMail className="text-base" /> },
-    { id: 'password', label: 'Password and authentication', icon: <FiLock className="text-base" /> },
-    { id: 'ssh', label: 'SSH and GPG keys', icon: <FiKey className="text-base" /> },
     { id: 'repositories', label: 'Repositories', icon: <FiBook className="text-base" /> },
     { id: 'developer', label: 'Developer settings', icon: <FiCode className="text-base" /> },
-    { id: 'pages', label: 'Pages', icon: <FiGlobe className="text-base" /> },
   ];
 
   return (
     <aside className="w-full lg:w-72 shrink-0 space-y-4">
-      {/* Профиль пользователя в шапке сайдбара с динамической аватаркой */}
       <div className="flex items-center gap-3 px-2 sm:px-3 pb-4 border-b border-[#d0d7de]">
         {avatarUrl ? (
           <img 
@@ -83,7 +76,6 @@ export default function AccountSettingTab({ currentTab, onSelectTab }: AccountSe
         </div>
       </div>
 
-      {/* Список настроек */}
       <div className="space-y-0.5">
         {menuItems.map((item) => {
           const isActive = currentTab === item.id;

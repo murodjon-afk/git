@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { FiUsers, FiLink, FiSmile } from "react-icons/fi";
+import { FiUsers, FiLink, FiSmile, FiMapPin, FiMail, FiInstagram } from "react-icons/fi";
+import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import ProfileNav from "../components/profile/PreTab";
 import OverviewTab from "../components/profile/OverView";
 import RepoTab from "../components/profile/RepoTab";
@@ -23,6 +24,7 @@ interface GithubUser {
   blog: string | null;
   created_at: string;
   twitter_username: string | null;
+  email?: string | null;
 }
 
 interface Repository {
@@ -47,6 +49,17 @@ export default function Page() {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [starredRepos, setStarredRepos] = useState<Repository[]>([]);
   const [loading, setLoading] = useState(true);
+
+  // Profile editable fields state (synced with Edit modal & localStorage/state)
+  const [profileData, setProfileData] = useState({
+    name: "murodjon-afk",
+    bio: "Web developer & programmer",
+    company: "",
+    location: "Samarkand",
+    website: "https://dotlabs.uz/",
+    email: "murodovmaruf67@gmail.com",
+    socials: ["https://www.instagram.com/muro__m_m/"],
+  });
   
   const tabParam = searchParams.get("tab") || searchParams.get("repos") || "overview";
   const [activeTab, setActiveTab] = useState(tabParam === "repositories" ? "repositories" : tabParam);
@@ -85,6 +98,17 @@ export default function Page() {
 
         const userData: GithubUser = await userRes.json();
         setUser(userData);
+        
+        // Initialize profileData with GitHub data if available
+        setProfileData((prev) => ({
+          ...prev,
+          name: userData.name || userData.login,
+          bio: userData.bio || prev.bio,
+          company: userData.company || prev.company,
+          location: userData.location || prev.location,
+          website: userData.blog || prev.website,
+          email: userData.email || prev.email,
+        }));
 
         if (reposRes.ok) {
           const reposData: Repository[] = await reposRes.json();
@@ -124,17 +148,14 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-[#ffffff] text-[#24292f] font-sans antialiased selection:bg-[#0969da] selection:text-white">
       
-      {/* Навигация профиля (адаптирована под мобильные экраны) */}
       <ProfileNav 
         activeTab={activeTab} 
         setActiveTab={handleTabChange} 
         publicReposCount={user.public_repos} 
       />
 
-      {/* Основной контейнер с адаптивными отступами и версткой */}
       <div className="w-full sm:w-[92%] lg:w-[85%] mx-auto px-3 sm:px-6 py-4 sm:py-8 flex flex-col md:flex-row gap-6 md:gap-10">
         
-        {/* Левая колонка: Профиль (на мобилках вверху, на десктопе фиксированная ширина) */}
         <div className="w-full md:w-[296px] flex-shrink-0 flex flex-col py-2 md:py-5">
           <div className="relative -mt-4 sm:-mt-8 mb-4 max-w-[200px] md:max-w-none mx-auto w-full">
             <Image
@@ -152,12 +173,18 @@ export default function Page() {
 
           <div className="text-center md:text-left">
             <h1 className="text-xl sm:text-2xl font-semibold leading-tight text-[#24292f] truncate">
-              {user.name ?? user.login}
+              {profileData.name}
             </h1>
-            <p className="text-lg sm:text-xl font-light text-[#57606a] mb-4 truncate">
+            <p className="text-lg sm:text-xl font-light text-[#57606a] mb-2 truncate">
               {user.login}
             </p>
           </div>
+
+          {profileData.bio && (
+            <p className="text-sm text-[#24292f] mb-4 whitespace-pre-wrap">
+              {profileData.bio}
+            </p>
+          )}
 
           <button 
             type="button"
@@ -176,14 +203,67 @@ export default function Page() {
             </div>
           </div>
 
-          {user.blog && (
-            <div className="flex items-center justify-center md:justify-start gap-2 text-xs sm:text-sm text-[#24292f] mb-6 overflow-hidden">
-              <FiLink className="w-4 h-4 text-[#57606a] flex-shrink-0" />
-              <a href={user.blog.startsWith("http") ? user.blog : `https://${user.blog}`} target="_blank" rel="noreferrer" className="hover:underline truncate">
-                {user.blog.replace(/^https?:\/\//, "")}
-              </a>
-            </div>
-          )}
+          <div className="space-y-2 text-xs sm:text-sm text-[#24292f] mb-6">
+            {profileData.company && (
+              <div className="flex items-center gap-2 truncate">
+                <HiOutlineBuildingOffice2 className="w-4 h-4 text-[#57606a] flex-shrink-0" />
+                <span className="truncate">{profileData.company}</span>
+              </div>
+            )}
+
+            {profileData.location && (
+              <div className="flex items-center gap-2 truncate">
+                <FiMapPin className="w-4 h-4 text-[#57606a] flex-shrink-0" />
+                <span className="truncate">{profileData.location}</span>
+              </div>
+            )}
+
+            {profileData.email && (
+              <div className="flex items-center gap-2 truncate">
+                <FiMail className="w-4 h-4 text-[#57606a] flex-shrink-0" />
+                <a href={`mailto:${profileData.email}`} className="hover:underline truncate">
+                  {profileData.email}
+                </a>
+              </div>
+            )}
+
+            {profileData.website && (
+              <div className="flex items-center gap-2 truncate">
+                <FiLink className="w-4 h-4 text-[#57606a] flex-shrink-0" />
+                <a 
+                  href={profileData.website.startsWith("http") ? profileData.website : `https://${profileData.website}`} 
+                  target="_blank" 
+                  rel="noreferrer" 
+                  className="hover:underline truncate text-[#0969da]"
+                >
+                  {profileData.website.replace(/^https?:\/\//, "")}
+                </a>
+              </div>
+            )}
+
+            {profileData.socials.map((social, idx) => {
+              if (!social.trim()) return null;
+              const cleanSocial = social.replace(/^https?:\/\//, "");
+              const isInsta = social.includes("instagram.com");
+              return (
+                <div key={idx} className="flex items-center gap-2 truncate">
+                  {isInsta ? (
+                    <FiInstagram className="w-4 h-4 text-[#57606a] flex-shrink-0" />
+                  ) : (
+                    <FiLink className="w-4 h-4 text-[#57606a] flex-shrink-0" />
+                  )}
+                  <a 
+                    href={social.startsWith("http") ? social : `https://${social}`} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="hover:underline truncate text-[#0969da]"
+                  >
+                    {cleanSocial}
+                  </a>
+                </div>
+              );
+            })}
+          </div>
 
           <div className="border-t border-[#d8dee4] pt-4 mt-2">
             <h2 className="font-semibold text-[#24292f] text-sm sm:text-base mb-3 text-center md:text-left">Achievements</h2>
@@ -198,7 +278,6 @@ export default function Page() {
           </div>
         </div>
 
-        {/* Правая колонка: Условный рендеринг контента (включая графики, обзоры и диаграммы со стопроцентной адаптивностью) */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           {activeTab === "overview" && (
             <OverviewTab repos={repos} publicReposCount={user.public_repos} />
@@ -216,8 +295,14 @@ export default function Page() {
       <Edit
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
-        initialName="murodjon-afk"
-        initialBio="Web developer & programmer"
+        initialName={profileData.name}
+        initialBio={profileData.bio}
+        initialCompany={profileData.company}
+        initialLocation={profileData.location}
+        initialWebsite={profileData.website}
+        initialEmail={profileData.email}
+        initialSocials={profileData.socials}
+        onSave={(newData) => setProfileData(newData)}
       />
     </div>
   );

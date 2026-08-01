@@ -50,10 +50,8 @@ const PreHeader = () => {
                 }`}
               >
                 <Icon size={16} className={`shrink-0 ${isActive ? 'text-[#24292f]' : 'text-[#57606a]'}`} />
-                {/* Текст скрыт на мобильных устройствах (показывается только от sm и выше) */}
                 <span className="hidden sm:inline whitespace-nowrap">{tab.name}</span>
 
-                {/* Оранжевая линия под активной вкладкой */}
                 {isActive && (
                   <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#fd8c73]" />
                 )}

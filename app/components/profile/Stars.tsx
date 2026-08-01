@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { FiSearch, FiChevronDown, FiStar } from "react-icons/fi";
 
 interface StarredRepository {
@@ -16,7 +16,7 @@ interface StarredRepository {
 
 interface StarsProps {
   starredRepos: StarredRepository[];
-  onToggleStar?: (repoId: number) => void; // Добавили callback
+  onToggleStar?: (repoId: number) => void; 
 }
 
 export default function Stars({ starredRepos, onToggleStar }: StarsProps) {
@@ -28,7 +28,6 @@ export default function Stars({ starredRepos, onToggleStar }: StarsProps) {
 
   return (
     <div className="w-full flex flex-col min-w-0">
-      {/* Верхняя панель: поиск и фильтры в один ряд */}
       <div className="flex flex-row justify-between items-center gap-3 pb-4 border-b border-[#d0d7de] mb-4 w-full">
         <div className="relative flex-1 flex items-center gap-2">
           <div className="relative flex-1">
@@ -56,7 +55,6 @@ export default function Stars({ starredRepos, onToggleStar }: StarsProps) {
         </div>
       </div>
 
-      {/* Список звезд */}
       <div className="divide-y divide-[#d0d7de]">
         {filteredRepos.length > 0 ? (
           filteredRepos.map((repo) => (
@@ -88,7 +86,6 @@ export default function Stars({ starredRepos, onToggleStar }: StarsProps) {
                 </div>
               </div>
 
-              {/* Блок кнопки Star справа (при клике удаляем/обновляем) */}
               <div className="flex items-center shadow-sm flex-shrink-0">
                 <button
                   onClick={() => onToggleStar?.(repo.id)}

@@ -132,18 +132,15 @@ const RepoCode = () => {
   if (loading) return <div className="p-8 w-full h-[100vh] text-center text-gray-500">Загрузка репозитория...</div>;
   if (error) return <div className="p-8 w-full h-[100vh] text-center text-red-500 font-medium">Ошибка: {error}</div>;
 
-  // Если репозиторий пустой — отображаем интерфейс быстрого старта GitHub
   if (isEmpty) {
     return (
 <><Empty username={username} repoName={repoName}></Empty></>
     );
   }
 
-  // Обычный репозиторий с файлами
   return (
     <div className="w-full mx-auto p-3 sm:p-6 font-sans text-sm text-[#24292f] max-w-[1280px]">
       
-      {/* Верхний блок: Имя репозитория и кнопки действий */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between pb-4 mb-5 border-b border-gray-200 gap-4">
         <div>
           <div className="flex items-center space-x-2 flex-wrap">
@@ -197,10 +194,8 @@ const RepoCode = () => {
         </div>
       </div>
 
-      {/* Двухколоночный макет */}
       <div className="flex flex-col lg:flex-row gap-6 items-start w-full">
         
-        {/* Левая колонка (80%) */}
         <div className="w-full lg:w-[80%] flex-shrink-0 min-w-0">
           
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
@@ -286,7 +281,6 @@ const RepoCode = () => {
             </div>
           </div>
 
-          {/* README секция */}
           <div className="w-full mx-auto my-8 bg-white border border-gray-200 rounded-lg shadow-sm font-sans text-[15px] text-[#24292f] antialiased overflow-hidden">
             <div className="flex items-center justify-between px-4 border-b border-gray-200 h-12">
               <div className="relative flex items-center h-full gap-2 px-1 text-sm font-semibold text-gray-800 border-b-2 border-[#fd8c73] cursor-pointer">
@@ -354,7 +348,6 @@ bun dev`}
           </div>
         </div>
 
-        {/* Правая колонка (20%) */}
         <div className="w-full lg:w-[20%] flex-shrink-0 flex flex-col space-y-5 text-xs text-gray-600">
           
           <div className="pb-5 border-b border-gray-200">

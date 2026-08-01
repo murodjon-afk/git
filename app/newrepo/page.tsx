@@ -12,27 +12,22 @@ import {
 export default function CreateRepositoryPage() {
   const router = useRouter();
 
-  // State for hydration and user data
   const [username, setUsername] = useState<string>("murodjon-afk");
   const [avatarUrl, setAvatarUrl] = useState<string>("https://github.com/murodjon-afk.png");
 
-  // Form states
   const [repoName, setRepoName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   
-  // Initialize options
   const [addReadme, setAddReadme] = useState<boolean>(false);
   const [gitIgnore, setGitIgnore] = useState<string>("No .gitignore");
   const [license, setLicense] = useState<string>("No license");
 
-  // Submission states
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isTouched, setIsTouched] = useState<boolean>(false);
 
-  // Hydration from localStorage for username
   useEffect(() => {
     const storedUser = localStorage.getItem("github_user");
     if (storedUser) {
@@ -41,11 +36,9 @@ export default function CreateRepositoryPage() {
     }
   }, []);
 
-  // Validation
   const isValidName = repoName.trim().length > 0;
   const showNameError = isTouched && !isValidName;
 
-  // Handle Form Submission via GitHub API
   const handleCreateRepository = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsTouched(true);
@@ -111,7 +104,6 @@ export default function CreateRepositoryPage() {
     <div className="min-h-screen bg-white text-[#24292f] font-sans antialiased py-8 px-4 sm:px-8">
       <div className="max-w-[1012px] mx-auto space-y-6">
         
-        {/* Header */}
         <div className="border-b border-gray-200 pb-4">
           <h1 className="text-2xl font-normal text-[#24292f]">Create a new repository</h1>
           <p className="text-sm text-gray-600 mt-1">
@@ -123,7 +115,6 @@ export default function CreateRepositoryPage() {
           </p>
         </div>
 
-        {/* Feedback Alerts */}
         {errorMessage && (
           <div className="p-3 bg-red-50 border border-red-200 rounded-md text-sm text-red-700 flex items-center gap-2">
             <FiAlertCircle className="shrink-0" />
@@ -140,7 +131,6 @@ export default function CreateRepositoryPage() {
 
         <form onSubmit={handleCreateRepository} className="space-y-6">
           
-          {/* General Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-800 text-xs font-semibold">
@@ -149,7 +139,6 @@ export default function CreateRepositoryPage() {
               <h2 className="text-base font-semibold text-[#24292f]">General</h2>
             </div>
 
-            {/* Owner & Repository Name Fields */}
             <div className="flex flex-col md:flex-row items-start md:items-center gap-3">
               <div>
                 <label className="block text-xs font-semibold text-[#24292f] mb-1">
@@ -197,7 +186,6 @@ export default function CreateRepositoryPage() {
               Great repository names are short and memorable. How about <span className="text-[#0969da] font-medium cursor-pointer hover:underline" onClick={() => setRepoName("fluffy-tribble")}>fluffy-tribble</span>?
             </p>
 
-            {/* Description Textarea */}
             <div>
               <label className="block text-xs font-semibold text-[#24292f] mb-1">
                 Description <span className="font-normal text-gray-500">(optional)</span>
@@ -217,7 +205,6 @@ export default function CreateRepositoryPage() {
 
           <hr className="border-gray-200" />
 
-          {/* Configuration Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <span className="flex items-center justify-center w-6 h-6 rounded-full bg-gray-200 text-gray-800 text-xs font-semibold">
@@ -226,10 +213,8 @@ export default function CreateRepositoryPage() {
               <h2 className="text-base font-semibold text-[#24292f]">Configuration</h2>
             </div>
 
-            {/* Конфигурация в едином полноразмерном блоке для идеальной линейки */}
             <div className="border border-gray-300 rounded-md bg-[#f6f8fa] divide-y divide-gray-300 w-full">
               
-              {/* Visibility Row */}
               <div className="p-4 flex items-center justify-between gap-4">
                 <div>
                   <h4 className="text-sm font-semibold text-[#24292f]">Choose visibility *</h4>
@@ -251,7 +236,6 @@ export default function CreateRepositoryPage() {
                 </div>
               </div>
 
-              {/* README Toggle */}
               <div className="p-4 flex items-center justify-between gap-4">
                 <div>
                   <h4 className="text-sm font-semibold text-[#24292f]">Add README</h4>
@@ -277,7 +261,6 @@ export default function CreateRepositoryPage() {
                 </div>
               </div>
 
-              {/* .gitignore Select */}
               <div className="p-4 flex items-center justify-between gap-4">
                 <div>
                   <h4 className="text-sm font-semibold text-[#24292f]">Add .gitignore</h4>
@@ -318,7 +301,6 @@ export default function CreateRepositoryPage() {
 
           <hr className="border-gray-200" />
 
-          {/* Submit Action */}
           <div>
             <button
               type="submit"

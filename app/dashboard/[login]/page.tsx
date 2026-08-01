@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import NotFound from "@/app/components/not-found";
 import Link from "next/link";
 import { 
   FiMessageSquare, 
@@ -60,7 +59,6 @@ interface GitHubEvent {
 }
 
 export default function DashboardPage() {
-  const [errorCode, setErrorCode] = useState<number | null>(null);
   const [search, setSearch] = useState("");
   const [query, setQuery] = useState("");
   const [activeScope] = useState("All repositories");
@@ -111,7 +109,6 @@ export default function DashboardPage() {
       .catch((err) => {
         const status = err.response?.status;          
          if (status) {
-    setErrorCode(status);
   }
         if (err.response?.status === 401) {
           setError("401 Unauthorized. Проверь GitHub Token.");
@@ -165,16 +162,7 @@ export default function DashboardPage() {
     );
   }
 
-  if (errorCode === 404) {
-    return (<>
-     <NotFound></NotFound>
-    </>)
-  }
-    if (error == 'Not Found') {
-    return (<>
-     <NotFound></NotFound>
-    </>)
-  }
+ 
   if (!data) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center text-gray-500 font-medium text-lg">
@@ -389,7 +377,6 @@ export default function DashboardPage() {
           </div>
         </main>
 
-        {/* ПРАВАЯ КОЛОНКА */}
         <aside className="w-full xl:w-[340px] flex-shrink-0">
           <div className="border border-gray-200 rounded-xl p-5 bg-white shadow-sm">
             <h3 className="text-sm font-bold text-gray-900 mb-4 tracking-wide">Latest from our changelog</h3>

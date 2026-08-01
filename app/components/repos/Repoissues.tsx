@@ -25,10 +25,8 @@ const Repoissues = () => {
 
   return (
     <div className="w-full h-screen flex flex-col lg:flex-row bg-[#ffffff] overflow-hidden">
-      {/* Сайдбар (на мобилках сверху идет в поток, на десктопе слева) */}
       <IssueSideBar activeTab={repoTab} setActiveTab={handleTabChange} />
 
-      {/* Основной контент с полным доступом к пространству экрана без наложений */}
       <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
         {repoTab === "Issues" && <Issues />}
         {repoTab === "Assigned to me" && <Asigned />}

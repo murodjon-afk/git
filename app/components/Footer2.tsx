@@ -26,7 +26,6 @@ const [username, setUsername] = useState(() => {
     <footer className="w-full bg-[#ffffff] border-t border-[#d0d7de] py-10 px-4 mt-auto">
       <div className="max-w-[1280px] mx-auto flex flex-wrap items-center justify-start md:justify-center gap-x-4 gap-y-2 text-[12px] text-[#57606a] font-sans">
         
-        {/* Логотип GitHub и копирайт */}
         <div className="flex items-center gap-2">
           <Link href={`/dashboard/${username}`} className="text-[#6e7781] hover:text-[#1f2328] transition-colors">
             <svg 
@@ -42,7 +41,6 @@ const [username, setUsername] = useState(() => {
           <span className="text-[#24292f]">© {currentYear} GitHub, Inc.</span>
         </div>
 
-        {/* Ссылки */}
         {footerLinks.map((link) => (
           <Link
             key={link.label}

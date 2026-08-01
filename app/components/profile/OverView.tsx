@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { FiChevronDown } from "react-icons/fi";
 
 interface Repository {
@@ -23,7 +23,6 @@ export default function OverviewTab({ repos, publicReposCount }: OverviewTabProp
 
   return (
     <div className="w-full flex flex-col min-w-0 mt-5">
-      {/* Секция популярных репозиториев */}
       <div className="mb-8 w-full">
         <div className="flex justify-between items-center mb-3">
           <h2 className="text-sm font-normal text-[#24292f]">Popular repositories</h2>
@@ -80,7 +79,6 @@ export default function OverviewTab({ repos, publicReposCount }: OverviewTabProp
         </div>
       </div>
 
-      {/* Секция графика контрибьюций */}
       <div className="w-full">
         <div className="flex justify-between items-center mb-2">
           <h2 className="text-base font-normal text-[#24292f]">
@@ -94,7 +92,6 @@ export default function OverviewTab({ repos, publicReposCount }: OverviewTabProp
           </div>
         </div>
 
-        {/* Основной контейнер с графиком и переключателем лет справа */}
         <div className="flex flex-col md:flex-row gap-4 items-start w-full">
           <div className="border border-[#d0d7de] rounded-md p-4 bg-white overflow-hidden flex-1 w-full">
             <div className="w-full">
@@ -164,8 +161,6 @@ export default function OverviewTab({ repos, publicReposCount }: OverviewTabProp
               </div>
             </div>
           </div>
-
-          {/* Правая панель с годами */}
           <div className="flex md:flex-col gap-1 w-full md:w-auto">
             {[2026, 2025, 2024].map((year) => {
               const isSelected = selectedYear === year;

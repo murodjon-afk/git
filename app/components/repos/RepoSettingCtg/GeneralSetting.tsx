@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { FiEdit2 } from 'react-icons/fi';
 
 interface GeneralSettingProps {
@@ -55,7 +54,6 @@ export default function GeneralSetting({
           </div>
         </div>
 
-        {/* Template repository checkbox */}
         <div className="flex items-start gap-3 py-6 border-b border-[#d0d7de]">
           <input 
             type="checkbox" 
@@ -72,7 +70,6 @@ export default function GeneralSetting({
           </div>
         </div>
 
-        {/* Default branch */}
         <div className="space-y-3 py-6 border-b border-[#d0d7de]">
           <h3 className="font-semibold text-base">Default branch</h3>
           <p className="text-xs text-[#57606a] leading-relaxed">
@@ -88,7 +85,6 @@ export default function GeneralSetting({
           </div>
         </div>
 
-        {/* Releases */}
         <div className="space-y-4 py-6 border-b border-[#d0d7de]">
           <h3 className="font-semibold text-base">Releases</h3>
           <div className="flex items-start gap-3">
@@ -108,7 +104,6 @@ export default function GeneralSetting({
           </div>
         </div>
 
-        {/* Social preview */}
         <div className="space-y-3 pt-6">
           <h3 className="font-semibold text-base">Social preview</h3>
           <p className="text-xs text-[#57606a] leading-relaxed">

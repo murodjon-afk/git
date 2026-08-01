@@ -20,7 +20,7 @@ const CreatedBy = () => {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isOpenFilter, setIsOpenFilter] = useState<boolean>(true); // true = open, false = closed
+  const [isOpenFilter, setIsOpenFilter] = useState<boolean>(true); 
 
   useEffect(() => {
     const fetchCreatedIssues = async () => {
@@ -38,7 +38,6 @@ const CreatedBy = () => {
 
         const stateParam = isOpenFilter ? "open" : "closed";
         
-        // Используем новый корректный Search API эндпоинт с динамическим state
         const url = `https://api.github.com/search/issues?q=repo:${githubUser}/${lastRepo}+is:issue+state:${stateParam}+author:${githubUser}`;
 
         const response = await fetch(url, {
@@ -53,7 +52,6 @@ const CreatedBy = () => {
 
         const data = await response.json();
         
-        // Достаем массив из data.items, так как структура Search API возвращает { total_count, items: [...] }
         const pureIssues = data.items || [];
         setIssues(pureIssues);
       } catch (err) {
@@ -67,7 +65,6 @@ const CreatedBy = () => {
     fetchCreatedIssues();
   }, [isOpenFilter]);
 
-  // Хелпер для форматирования времени (например, "opened 3h ago")
   const formatTimeAgo = (dateString: string) => {
     const now = new Date();
     const past = new Date(dateString);
@@ -100,7 +97,6 @@ const CreatedBy = () => {
         </div>
       )}
 
-      {/* Заголовок Created by me */}
       <div className="w-full flex justify-between items-center mb-4">
         <h1 className="text-xl font-semibold">Created by me</h1>
         <button className="text-sm bg-[#1f883d] hover:bg-[#1a7f37] text-white py-1.5 px-3 font-medium cursor-pointer rounded-md shadow-sm transition-colors">
@@ -108,7 +104,6 @@ const CreatedBy = () => {
         </button>
       </div>
 
-      {/* Поисковая строка с баджем author:@me */}
       <div className="relative w-full mb-4 flex items-center bg-[#f6f8fa] border border-[#d0d7de] rounded-md focus-within:border-[#0969da] focus-within:ring-1 focus-within:ring-[#0969da] shadow-sm transition-all h-8">
         <div className="flex-1 flex items-center px-3 overflow-x-auto whitespace-nowrap scrollbar-none text-sm text-[#57606a]">
           <span className="text-[#0969da] bg-[#ddf4ff] px-1.5 py-0.5 rounded mr-1.5 text-[13px]">is:issue</span>
@@ -126,9 +121,7 @@ const CreatedBy = () => {
         </div>
       </div>
 
-      {/* Контейнер таблицы */}
       <div className="border border-[#d0d7de] rounded-lg overflow-hidden">
-        {/* Инструменты и фильтры таблицы */}
         <div className="flex items-center justify-between bg-[#f6f8fa] border-b border-[#d0d7de] px-4 py-3 text-sm text-[#57606a]">
           <div className="flex items-center gap-4">
             <input
@@ -175,14 +168,12 @@ const CreatedBy = () => {
           </div>
         </div>
 
-        {/* Индикатор загрузки */}
         {loading && (
           <div className="flex justify-center items-center min-h-[200px] text-gray-500 bg-white">
             Loading...
           </div>
         )}
 
-        {/* Список результатов */}
         {!loading && (
           <div className="bg-white divide-y divide-[#d0d7de]">
             {issues.length === 0 ? (
@@ -196,20 +187,17 @@ const CreatedBy = () => {
                   key={issue.id}
                   className="p-4 flex items-start gap-3 hover:bg-[#f6f8fa] border-b border-[#d0d7de] last:border-b-0 transition-colors bg-white"
                 >
-                  {/* Чекбокс */}
                   <input
                     type="checkbox"
                     className="w-3.5 h-3.5 mt-1 rounded border-[#d0d7de] text-[#0969da] focus:ring-[#0969da] cursor-pointer flex-shrink-0"
                   />
                   
-                  {/* Иконка открытого Issue (зеленый кружок с точкой) */}
                   <CircleDot
                     className="text-[#1a7f37] mt-0.5 flex-shrink-0"
                     size={18}
                     strokeWidth={2}
                   />
                   
-                  {/* Контент таски */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline gap-2">
                       <a 
@@ -220,7 +208,6 @@ const CreatedBy = () => {
                       </a>
                     </div>
                     
-                    {/* Подзаголовок: Номер, автор и время создания */}
                     <p className="text-xs text-[#57606a] mt-1 font-sans">
                       #{issue.number} · {issue.user.login} opened {formatTimeAgo(issue.created_at)}
                     </p>

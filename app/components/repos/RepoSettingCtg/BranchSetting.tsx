@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { FiGitPullRequest } from 'react-icons/fi';
 
 export default function BranchesSetting() {
@@ -11,12 +10,10 @@ export default function BranchesSetting() {
       </h2>
 
       <div className="mt-6 border border-[#d0d7de] rounded-md p-4 sm:p-6 bg-white flex flex-col sm:flex-row items-start gap-4">
-        {/* Синяя иконка слева */}
         <div className="p-2 bg-[#ddf4ff] text-[#0969da] rounded-md shrink-0">
           <FiGitPullRequest className="text-xl" />
         </div>
 
-        {/* Текст и кнопки */}
         <div className="space-y-3 w-full">
           <h3 className="font-semibold text-base text-[#24292f]">
             Classic branch protections have not been configured

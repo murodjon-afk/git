@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { FiChevronDown } from 'react-icons/fi';
 
 export default function PagesSetting() {
@@ -11,12 +10,10 @@ export default function PagesSetting() {
       </h2>
 
       <div className="mt-4 space-y-6">
-        {/* Intro text */}
         <p className="text-xs text-[#57606a] leading-relaxed">
           <a href="#" className="text-[#0969da] hover:underline">GitHub Pages</a> is designed to host your personal, organization, or project pages from a GitHub repository.
         </p>
 
-        {/* Build and deployment */}
         <div className="space-y-4 pt-2">
           <h3 className="font-semibold text-base text-[#24292f]">Build and deployment</h3>
           
@@ -46,7 +43,6 @@ export default function PagesSetting() {
           </div>
         </div>
 
-        {/* Visibility */}
         <div className="pt-6 border-t border-[#d0d7de] space-y-3">
           <div className="flex items-center gap-2">
             <h3 className="font-semibold text-base text-[#24292f]">Visibility</h3>

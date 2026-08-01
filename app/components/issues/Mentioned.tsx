@@ -20,7 +20,7 @@ const Mentioned = () => {
   const [issues, setIssues] = useState<Issue[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isOpenFilter, setIsOpenFilter] = useState<boolean>(true); // true = open, false = closed
+  const [isOpenFilter, setIsOpenFilter] = useState<boolean>(true); 
 
   const [openCount, setOpenCount] = useState<number>(0);
   const [closedCount, setClosedCount] = useState<number>(0);
@@ -41,7 +41,6 @@ const Mentioned = () => {
 
         const stateParam = isOpenFilter ? "open" : "closed";
         
-        // Эндпоинт Search API с фильтром mentions
         const url = `https://api.github.com/search/issues?q=repo:${githubUser}/${lastRepo}+is:issue+state:${stateParam}+mentions:${githubUser}`;
 
         const response = await fetch(url, {
@@ -58,7 +57,6 @@ const Mentioned = () => {
         const pureIssues = data.items || [];
         setIssues(pureIssues);
 
-        // Обновляем счетчики на основе total_count из ответа API
         if (isOpenFilter) {
           setOpenCount(data.total_count || 0);
         } else {
@@ -104,7 +102,6 @@ const Mentioned = () => {
         </div>
       )}
 
-      {/* Заголовок Mentioned */}
       <div className="w-full flex justify-between items-center my-3">
         <h1 className="text-xl font-semibold">Mentioned</h1>
         <button className="text-sm bg-[#1f883d] hover:bg-[#1a7f37] text-white py-1.5 px-3 font-medium cursor-pointer rounded-md shadow-sm transition-colors">
@@ -112,7 +109,6 @@ const Mentioned = () => {
         </button>
       </div>
 
-      {/* Поисковая строка с баджем mentions:@me */}
       <div className="relative w-full mb-4 flex items-center bg-[#f6f8fa] border border-[#d0d7de] rounded-md focus-within:border-[#0969da] focus-within:ring-1 focus-within:ring-[#0969da] shadow-sm transition-all h-8">
         <div className="flex-1 flex items-center px-3 overflow-x-auto whitespace-nowrap scrollbar-none text-sm text-[#57606a]">
           <span className="text-[#0969da] bg-[#ddf4ff] px-1.5 py-0.5 rounded mr-1.5 text-[13px]">is:issue</span>
@@ -130,9 +126,7 @@ const Mentioned = () => {
         </div>
       </div>
 
-      {/* Контейнер таблицы */}
       <div className="border border-[#d0d7de] rounded-lg overflow-hidden">
-        {/* Шапка таблицы */}
         <div className="flex items-center justify-between bg-[#f6f8fa] border-b border-[#d0d7de] px-4 py-3 text-sm text-[#57606a]">
           <div className="flex items-center gap-4">
             <input
@@ -179,14 +173,12 @@ const Mentioned = () => {
           </div>
         </div>
 
-        {/* Индикатор загрузки */}
         {loading && (
           <div className="flex justify-center items-center min-h-[200px] text-gray-500 bg-white">
             Loading...
           </div>
         )}
 
-        {/* Список результатов или состояние "No results" */}
         {!loading && !error && (
           <div className="bg-white divide-y divide-[#d0d7de]">
             {issues.length === 0 ? (
